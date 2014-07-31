@@ -3,9 +3,10 @@
 <fullyQualifiedTypeName name="codechicken.multipart.TItemMultiPart"/>
 <fullyQualifiedTypeName name="codechicken.multipart.JCuboidPart"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
-<fullyQualifiedTypeName name="net.minecraft.entity.Entity"/>
-<fullyQualifiedTypeName name="cpw.mods.fml.relauncher.Side"/>
 <fullyQualifiedTypeName name="codechicken.lib.render.TextureUtils"/>
 <fullyQualifiedTypeName name="org.lwjgl.opengl.GL11"/>
 <fullyQualifiedTypeName name="com.pommert.jedidiah.bouncecraft.log.BCLog"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.relauncher.Side"/>
+<fullyQualifiedTypeName name="com.pommert.jedidiah.bouncecraft.fmp.logic.NullBCPartLogic"/>
+<fullyQualifiedTypeName name="net.minecraft.entity.Entity"/>
 </qualifiedTypeNameHistroy>

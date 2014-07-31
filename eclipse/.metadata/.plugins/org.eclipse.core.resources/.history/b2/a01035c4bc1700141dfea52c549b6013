@@ -1,7 +1,0 @@
-package com.pommert.jedidiah.bouncecraft.fmp
-
-import codechicken.multipart.TCuboidPart
-
-class BCMultiPart extends TCuboidPart {
-
-}

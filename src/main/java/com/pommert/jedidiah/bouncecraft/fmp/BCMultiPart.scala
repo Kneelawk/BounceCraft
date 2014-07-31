@@ -107,10 +107,36 @@ object BCMultiPart {
 	}
 
 	val renderTranslations: Array[() => Unit] = Array(
-		() => {},
-		() => {},
-		() => {},
-		() => {},
-		() => {},
-		() => {})
+		() => {
+			GL11.glTranslated(0, -0.5 + 1D / 32D, 0)
+			GL11.glRotated(180, 0, 0, 1)
+			GL11.glTranslated(-0.5, -1D / 32D, -0.5)
+		},
+		() => {
+			GL11.glTranslated(-0.5, 0.5 - 1D / 16D, -0.5)
+		},
+		() => {
+			GL11.glTranslated(-0.5, -0.5, -0.5 + 1D / 16D)
+			GL11.glRotated(270, 1, 0, 0)
+		},
+		() => {
+			GL11.glTranslated(0, 0, 0.5 - 1D / 32D)
+			GL11.glRotated(180, 0, 1, 0)
+			GL11.glTranslated(-0.5, -0.5, 1D / 32D)
+			GL11.glRotated(270, 1, 0, 0)
+		},
+		() => {
+			GL11.glTranslated(-0.5 + 1D / 16D, 0, 0)
+			GL11.glRotated(90, 0, 0, 1)
+			GL11.glRotated(90, 0, 1, 0)
+			GL11.glTranslated(-0.5, 0, -0.5)
+		},
+		() => {
+			GL11.glTranslated(0.5, 0, 0)
+			GL11.glRotated(90, 0, 0, 1)
+			GL11.glRotated(90, 0, 1, 0)
+			GL11.glTranslated(0, 1D / 32D, -0.5)
+			GL11.glRotated(180, 0, 0, 1)
+			GL11.glTranslated(-0.5, -1D / 32D, 0)
+		})
 }
