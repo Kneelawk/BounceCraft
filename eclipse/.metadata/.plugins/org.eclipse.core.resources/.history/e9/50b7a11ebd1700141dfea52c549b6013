@@ -1,0 +1,19 @@
+package com.pommert.jedidiah.bouncecraft.fmp
+
+import codechicken.multipart.TCuboidPart
+import codechicken.lib.vec.Cuboid6
+import codechicken.lib.vec.Rotation
+import codechicken.lib.vec.Vector3
+
+class BCMultiPart extends TCuboidPart {
+	
+}
+
+object BCMultiPart {
+	val sides = new Array[Cuboid6](6)
+	sides(0) = new Cuboid6(0, 0, 0, 1, 1 / 16D, 1)
+	for(i <- 1 to 6){
+		val t = Rotation.sideRotations(i).at(Vector3.center)
+		sides(i) = sides(0).copy().apply(t)
+	}
+}

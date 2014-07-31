@@ -1,0 +1,5 @@
+package com.pommert.jedidiah.bouncecraft.fmp.logic
+
+class NullBCPartLogic extends BCPartLogic {
+
+}

@@ -1,0 +1,143 @@
+package com.pommert.jedidiah.bouncecraft.fmp;
+
+import java.util.Arrays;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.AdvancedModelLoader;
+import net.minecraftforge.client.model.obj.WavefrontObject;
+import net.minecraftforge.common.util.ForgeDirection;
+import codechicken.lib.data.MCDataInput;
+import codechicken.lib.data.MCDataOutput;
+import codechicken.lib.render.BlockRenderer;
+import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.uv.IconTransformation;
+import codechicken.lib.vec.Cuboid6;
+import codechicken.lib.vec.Rotation;
+import codechicken.lib.vec.Transformation;
+import codechicken.lib.vec.Translation;
+import codechicken.lib.vec.Vector3;
+import codechicken.multipart.JCuboidPart;
+
+import com.pommert.jedidiah.bouncecraft.fmp.logic.BCPartLogic;
+import com.pommert.jedidiah.bouncecraft.items.BCItems;
+import com.pommert.jedidiah.bouncecraft.log.BCLog;
+import com.pommert.jedidiah.bouncecraft.ref.ModRef;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class TestMultiPart extends JCuboidPart {
+
+	@SideOnly(Side.CLIENT)
+	private static final WavefrontObject model = (WavefrontObject) AdvancedModelLoader
+			.loadModel(new ResourceLocation(ModRef.MOD_ID,
+					"models/blockBounce.obj"));
+	@SideOnly(Side.CLIENT)
+	private static final ResourceLocation texture = new ResourceLocation(
+			ModRef.MOD_ID, "textures/blocks/blockBounce.png");
+
+	public static final Cuboid6[] sides = createSides();
+
+	private static Cuboid6[] createSides() {
+		Cuboid6[] sides = new Cuboid6[6];
+		sides[0] = new Cuboid6(0, 0, 0, 1, 1 / 16D, 1);
+		for (int i = 1; i < 6; i++) {
+			Transformation t = Rotation.sideRotations[i].at(Vector3.center);
+			sides[i] = sides[0].copy().apply(t);
+		}
+		return sides;
+	}
+
+	public ForgeDirection facing;
+
+	public TestMultiPart() {
+	}
+
+	public TestMultiPart(ForgeDirection facing) {
+		this.facing = facing;
+		BCLog.info(facing);
+	}
+
+	@Override
+	public Cuboid6 getBounds() {
+		return sides[facing.ordinal()];
+	}
+
+	@Override
+	public String getType() {
+		return "bc_test";
+	}
+
+	@Override
+	public void load(NBTTagCompound tag) {
+		facing = ForgeDirection.VALID_DIRECTIONS[tag.getByte("facing")];
+	}
+
+	@Override
+	public void save(NBTTagCompound tag) {
+		tag.setByte("facing", (byte) facing.ordinal());
+	}
+
+	@Override
+	public void readDesc(MCDataInput packet) {
+		facing = ForgeDirection.VALID_DIRECTIONS[packet.readByte()];
+	}
+
+	@Override
+	public void writeDesc(MCDataOutput packet) {
+		packet.writeByte((byte) facing.ordinal());
+	}
+
+	@Override
+	public void drawBreaking(RenderBlocks renderBlocks) {
+		CCRenderState.reset();
+		CCRenderState.setPipeline(new Translation(x(), y(), z()),
+				new IconTransformation(renderBlocks.overrideBlockTexture));
+		BlockRenderer.renderCuboid(getBounds(), 0);
+	}
+
+	public ItemStack getItem() {
+		return new ItemStack(BCItems.items.get("itemTestMultiPart"));
+	}
+
+	@Override
+	public Iterable<ItemStack> getDrops() {
+		return Arrays.asList(getItem());
+	}
+
+	@Override
+	public ItemStack pickItem(MovingObjectPosition hit) {
+		return getItem();
+	}
+
+	@Override
+	public void onEntityCollision(Entity e) {
+		ForgeDirection pushDir = facing.getOpposite();
+		Vector3 vec = new Vector3(0, 0, 1);
+		Transformation t = Rotation.sideRotations[pushDir.ordinal()]
+				.at(Vector3.center);
+		vec.apply(t);
+		e.motionX = (vec.x == 0 ? e.motionX : vec.x);
+		e.motionY = (vec.y == 0 ? e.motionY : vec.y);
+		e.motionZ = (vec.z == 0 ? e.motionZ : vec.z);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean renderStatic(Vector3 pos, int pass) {
+		if (pass == 0) {
+			Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+			CCRenderState.setBrightness(world(), x(), y(), z());
+			
+			return true;
+		}
+		return false;
+	}
+}

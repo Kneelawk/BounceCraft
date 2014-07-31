@@ -1,0 +1,13 @@
+package com.pommert.jedidiah.bouncecraft.items;
+
+import net.minecraftforge.client.MinecraftForgeClient;
+
+import com.pommert.jedidiah.bouncecraft.items.render.ItemRenderTestMultipart;
+
+public class BCItemsClient {
+	public static void init() {
+		MinecraftForgeClient.registerItemRenderer(
+				BCItems.items.get("itemTestMultiPart"),
+				new ItemRenderTestMultipart());
+	}
+}

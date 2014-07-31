@@ -1,0 +1,74 @@
+package com.pommert.jedidiah.bouncecraft.items;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import codechicken.lib.vec.BlockCoord;
+import codechicken.lib.vec.Rotation;
+import codechicken.lib.vec.Vector3;
+import codechicken.multipart.MultiPartRegistry;
+import codechicken.multipart.TItemMultiPart;
+import codechicken.multipart.TMultiPart;
+import codechicken.multipart.TileMultipart;
+
+import com.pommert.jedidiah.bouncecraft.fmp.TestMultiPart;
+import com.pommert.jedidiah.bouncecraft.log.BCLog;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class ItemTestMultipart extends BCItem implements TItemMultiPart {
+
+	@Override
+	public double getHitDepth(Vector3 vhit, int side) {
+		return vhit.copy().scalarProject(Rotation.axes[side]) + (side % 2 ^ 1);
+	}
+
+	@Override
+	public TMultiPart newPart(ItemStack arg0, EntityPlayer arg1, World arg2,
+			BlockCoord arg3, int arg4, Vector3 arg5) {
+		TestMultiPart part = (TestMultiPart) MultiPartRegistry.createPart(
+				"bc_test", arg2.isRemote);
+		part.facing = ForgeDirection.VALID_DIRECTIONS[ForgeDirection.OPPOSITES[arg4]];
+		return part;
+	}
+
+	@Override
+	public boolean hasSubTypes() {
+		return true;
+	}
+
+	@Override
+	public boolean onItemUse(ItemStack item, EntityPlayer player, World world,
+			int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+		BlockCoord pos = new BlockCoord(x, y, z);
+		Vector3 vhit = new Vector3(hitX, hitY, hitZ);
+		double d = getHitDepth(vhit, side);
+
+		if (d < 1 && place(item, player, world, pos, side, vhit))
+			return true;
+
+		pos.offset(side);
+		return place(item, player, world, pos, side, vhit);
+	}
+
+	private boolean place(ItemStack stack, EntityPlayer player, World world,
+			BlockCoord pos, int side, Vector3 vhit) {
+		TMultiPart part = newPart(stack, player, world, pos, side, vhit);
+		if (part == null || !TileMultipart.canPlacePart(world, pos, part))
+			return false;
+
+		if (!world.isRemote)
+			TileMultipart.addPart(world, pos, part);
+		if (!player.capabilities.isCreativeMode)
+			stack.stackSize -= 1;
+		return true;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getSpriteNumber() {
+		return 0;
+	}
+}
