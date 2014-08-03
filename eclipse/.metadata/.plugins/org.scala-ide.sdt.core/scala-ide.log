@@ -172,3 +172,6 @@ java.lang.AssertionError: assertion failed: Expected exactly one type parameter,
 2014-07-31 08:40:43,642 ERROR [Worker-0] - System.err - SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 2014-07-31 08:40:43,671 ERROR [Worker-0] - System.err - SLF4J: Defaulting to no-operation (NOP) logger implementation
 2014-07-31 08:40:43,671 ERROR [Worker-0] - System.err - SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2014-08-03 13:03:05,555  WARN [ModalContext] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2014-08-03 13:03:12,772  WARN [main] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
+2014-08-03 13:04:24,224 ERROR [ModalContext] - System.err - Unable to construct FQN from 'java.com.pommert.jedidiah.bouncecraft'
