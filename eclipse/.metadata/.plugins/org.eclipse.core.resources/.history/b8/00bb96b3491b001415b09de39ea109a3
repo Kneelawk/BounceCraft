@@ -1,0 +1,24 @@
+[
+{
+  "modid": "bouncecraft",
+  "name": "Bounce Craft",
+  "description": "A mod originally created to test the abilities of blocks and entity movement that has so much possibility!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["kneelawk"],
+  "credits": "Created by Kneelawk",
+  "logoFile": "assets/bouncecraft/textures/logo/logo.png",
+  "screenshots": [],
+  "requiredMods": [
+    "Forge",
+    "ForgeMultipart",
+    "CodeChickenCore"
+  ],
+  "dependencies": [
+    "ForgeMultipart",
+    "CodeChickenCore"
+  ]
+}
+]

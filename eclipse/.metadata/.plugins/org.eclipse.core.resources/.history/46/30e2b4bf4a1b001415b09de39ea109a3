@@ -1,0 +1,4 @@
+/bin/
+/.metadata
+/eclipse/*
+!/eclipse/.metadata/.plugins/
