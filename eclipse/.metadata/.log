@@ -2668,3 +2668,6 @@ org.eclipse.jgit.api.errors.JGitInternalException: No changes
 	at org.eclipse.egit.core.op.CommitOperation.execute(CommitOperation.java:206)
 	at org.eclipse.egit.ui.internal.commit.CommitJob.run(CommitJob.java:93)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+
+!ENTRY org.eclipse.ui 4 4 2014-08-03 14:15:56.995
+!MESSAGE Conflicting handlers for org.eclipse.ui.navigate.backwardHistory: {ActionHandler(org.eclipse.ui.internal.dialogs.PreferencePageHistory$1@3f999374)} vs {ActionHandler(org.eclipse.ui.internal.NavigationHistoryAction@491ef90c)}
