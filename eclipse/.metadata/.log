@@ -2654,3 +2654,17 @@ org.eclipse.core.internal.resources.ResourceException: Resource '/Minecraft/src/
 	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:168)
 !SUBENTRY 1 org.eclipse.core.resources 4 368 2014-08-03 13:05:05.656
 !MESSAGE Resource '/Minecraft/src/main/java/com/pommert/jedidiah/bouncecraft/fmp/BCMultiPart.scala' does not exist.
+
+!ENTRY org.eclipse.egit.ui 4 0 2014-08-03 13:58:04.424
+!MESSAGE An internal error occurred
+!STACK 0
+org.eclipse.jgit.api.errors.JGitInternalException: No changes
+	at org.eclipse.jgit.api.CommitCommand.createTemporaryIndex(CommitCommand.java:437)
+	at org.eclipse.jgit.api.CommitCommand.call(CommitCommand.java:203)
+	at org.eclipse.egit.core.op.CommitOperation.commit(CommitOperation.java:243)
+	at org.eclipse.egit.core.op.CommitOperation.access$5(CommitOperation.java:232)
+	at org.eclipse.egit.core.op.CommitOperation$1.run(CommitOperation.java:196)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2345)
+	at org.eclipse.egit.core.op.CommitOperation.execute(CommitOperation.java:206)
+	at org.eclipse.egit.ui.internal.commit.CommitJob.run(CommitJob.java:93)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
