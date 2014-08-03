@@ -2671,3 +2671,43 @@ org.eclipse.jgit.api.errors.JGitInternalException: No changes
 
 !ENTRY org.eclipse.ui 4 4 2014-08-03 14:15:56.995
 !MESSAGE Conflicting handlers for org.eclipse.ui.navigate.backwardHistory: {ActionHandler(org.eclipse.ui.internal.dialogs.PreferencePageHistory$1@3f999374)} vs {ActionHandler(org.eclipse.ui.internal.NavigationHistoryAction@491ef90c)}
+
+!ENTRY org.eclipse.jdt.core 4 4 2014-08-03 14:34:21.509
+!MESSAGE File not found: '/Minecraft/src/main/java/com/pommert/jedidiah/bouncecraft/fmp/BCMultiPart.scala'
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Resource '/Minecraft/src/main/java/com/pommert/jedidiah/bouncecraft/fmp/BCMultiPart.scala' does not exist.
+	at org.eclipse.core.internal.resources.Resource.checkExists(Resource.java:341)
+	at org.eclipse.core.internal.resources.Resource.checkAccessible(Resource.java:215)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:287)
+	at org.eclipse.jdt.internal.core.util.Util.getResourceContentsAsCharArray(Util.java:1188)
+	at org.eclipse.jdt.internal.core.CompilationUnit.getContents(CompilationUnit.java:649)
+	at scala.tools.eclipse.javaelements.ScalaSourceFile.getContents(ScalaSourceFile.scala:146)
+	at scala.tools.eclipse.InteractiveCompilationUnit$class.sourceFile$default$1(InteractiveCompilationUnit.scala:37)
+	at scala.tools.eclipse.javaelements.ScalaSourceFile.sourceFile$default$1(ScalaSourceFile.scala:69)
+	at scala.tools.eclipse.ScalaPresentationCompiler$$anon$1.default(ScalaPresentationCompiler.scala:67)
+	at scala.tools.eclipse.ScalaPresentationCompiler$$anon$1.default(ScalaPresentationCompiler.scala:65)
+	at scala.collection.mutable.HashMap.apply(HashMap.scala:65)
+	at scala.tools.eclipse.ScalaPresentationCompiler.withSourceFile(ScalaPresentationCompiler.scala:107)
+	at scala.tools.eclipse.ScalaProject$$anonfun$withSourceFile$1.apply(ScalaProject.scala:589)
+	at scala.tools.eclipse.ScalaProject$$anonfun$withSourceFile$1.apply(ScalaProject.scala:588)
+	at scala.tools.eclipse.ScalaProject$$anonfun$withPresentationCompiler$1.apply(ScalaProject.scala:582)
+	at scala.tools.eclipse.ScalaProject$$anonfun$withPresentationCompiler$1.apply(ScalaProject.scala:581)
+	at scala.tools.eclipse.util.Cached$class.apply(Cached.scala:41)
+	at scala.tools.eclipse.ScalaProject$$anon$1.apply(ScalaProject.scala:95)
+	at scala.tools.eclipse.ScalaProject.withPresentationCompiler(ScalaProject.scala:581)
+	at scala.tools.eclipse.ScalaProject.withSourceFile(ScalaProject.scala:590)
+	at scala.tools.eclipse.InteractiveCompilationUnit$class.withSourceFile(InteractiveCompilationUnit.scala:66)
+	at scala.tools.eclipse.javaelements.ScalaSourceFile.withSourceFile(ScalaSourceFile.scala:69)
+	at scala.tools.eclipse.markoccurrences.ScalaOccurrencesFinder.findOccurrences(ScalaOccurrencesFinder.scala:83)
+	at scala.tools.eclipse.ScalaSourceFileEditor.getAnnotations(ScalaSourceFileEditor.scala:176)
+	at scala.tools.eclipse.ScalaSourceFileEditor.scala$tools$eclipse$ScalaSourceFileEditor$$performOccurrencesUpdate(ScalaSourceFileEditor.scala:167)
+	at scala.tools.eclipse.ScalaSourceFileEditor$$anonfun$1$$anonfun$apply$2.apply$mcV$sp(ScalaSourceFileEditor.scala:202)
+	at scala.tools.eclipse.ScalaSourceFileEditor$$anonfun$1$$anonfun$apply$2.apply(ScalaSourceFileEditor.scala:202)
+	at scala.tools.eclipse.ScalaSourceFileEditor$$anonfun$1$$anonfun$apply$2.apply(ScalaSourceFileEditor.scala:202)
+	at scala.tools.eclipse.util.Utils$.debugTimed(Utils.scala:25)
+	at scala.tools.eclipse.ScalaSourceFileEditor$$anonfun$1.apply(ScalaSourceFileEditor.scala:201)
+	at scala.tools.eclipse.ScalaSourceFileEditor$$anonfun$1.apply(ScalaSourceFileEditor.scala:199)
+	at scala.tools.eclipse.util.EclipseUtils$$anon$1.run(EclipseUtils.scala:99)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+!SUBENTRY 1 org.eclipse.core.resources 4 368 2014-08-03 14:34:21.509
+!MESSAGE Resource '/Minecraft/src/main/java/com/pommert/jedidiah/bouncecraft/fmp/BCMultiPart.scala' does not exist.
