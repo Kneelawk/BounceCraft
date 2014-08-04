@@ -262,3 +262,4 @@ scala.reflect.internal.MissingRequirementError: class void in compiler mirror no
 	at scala.util.control.Breaks.breakable(Breaks.scala:38)
 	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:420)
 	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2014-08-04 00:46:34,418 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Java Model Exception: Java Model Status [/Minecraft/src/main/java/com/pommert/jedidiah/bouncecraft2/fmp/logic/BounceBlockPartLogic.scala already exists in target]

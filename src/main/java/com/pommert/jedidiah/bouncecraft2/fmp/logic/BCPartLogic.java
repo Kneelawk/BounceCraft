@@ -21,8 +21,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public abstract class BCPartLogic {
 
 	public static enum Index {
-
-		NULL_BCPARTLOGIC(NullBCPartLogic.class, (byte) (Byte.MAX_VALUE));
+		BOUNCE_BLOCK_BCPARTLOGIC(BounceBlockPartLogic.class), NULL_BCPARTLOGIC(
+				NullBCPartLogic.class, (byte) (Byte.MAX_VALUE));
 
 		public static final Index[] VALUES = createValues();
 

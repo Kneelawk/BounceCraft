@@ -31,10 +31,21 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 	var logic: BCPartLogic = if (l != null) l else BCPartLogic.newLogic(Index.NULL_BCPARTLOGIC.getId, this)
 
 	@SideOnly(Side.CLIENT)
-	val texture = logic.getTexture()
+	var texture = logic.getTexture()
 
 	@SideOnly(Side.CLIENT)
-	val model = AdvancedModelLoader.loadModel(logic.getModel())
+	var model = AdvancedModelLoader.loadModel(logic.getModel())
+
+	def setLogic(l: BCPartLogic) {
+		logic = l
+		setLogicClient()
+	}
+
+	@SideOnly(Side.CLIENT)
+	def setLogicClient() {
+		texture = logic.getTexture()
+		model = AdvancedModelLoader.loadModel(logic.getModel())
+	}
 
 	def this() = this(ForgeDirection.DOWN, null, 0)
 
@@ -56,6 +67,7 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 			}
 		logic = BCPartLogic.newLogic(id, this)
 		logic.load(tag)
+		setLogicClient()
 	}
 
 	@Override
@@ -72,6 +84,7 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 		rotation = packet.readByte()
 		logic = BCPartLogic.newLogic(packet.readInt(), this)
 		logic.readDesc(packet)
+		setLogicClient()
 	}
 
 	@Override
