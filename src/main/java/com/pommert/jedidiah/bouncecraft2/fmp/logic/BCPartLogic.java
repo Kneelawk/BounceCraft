@@ -1,5 +1,8 @@
 package com.pommert.jedidiah.bouncecraft2.fmp.logic;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,50 +19,94 @@ import cpw.mods.fml.relauncher.SideOnly;
 public abstract class BCPartLogic {
 
 	public static enum Index {
-		NULL_BCPARTLOGIC(NullBCPartLogic.class);
 
-		public static final Index[] VALUES = values();
+		NULL_BCPARTLOGIC(NullBCPartLogic.class, (byte) (Byte.MAX_VALUE));
+
+		public static final Index[] VALUES = createValues();
+
+		private static Index[] createValues() {
+			Index[] values = values();
+			int size = values.length;
+
+			for (int i = 0; i < values.length; i++) {
+				if (values[i].getId() >= size) {
+					size = values[i].getId() + 1;
+				}
+			}
+
+			Index[] is = new Index[size];
+
+			for (int i = 0; i < values.length; i++) {
+				int id = values[i].getId();
+				is[id] = values[i];
+			}
+
+			return is;
+		}
 
 		private Class<? extends BCPartLogic> clazz;
+		private byte id;
 
 		private Index(Class<? extends BCPartLogic> clazz) {
 			this.clazz = clazz;
+			id = (byte) ordinal();
+		}
+
+		private Index(Class<? extends BCPartLogic> clazz, byte id) {
+			this.clazz = clazz;
+			this.id = id;
 		}
 
 		public Class<? extends BCPartLogic> get() {
 			return clazz;
 		}
+
+		public byte getId() {
+			return id;
+		}
 	}
 
-	public static BCPartLogic newLogic(int id) {
+	public static BCPartLogic newLogic(int id, BCMultiPart part) {
 		if (id < 0 || id >= Index.VALUES.length)
 			return null;
+		if (Index.VALUES[id] == null)
+			id = Index.NULL_BCPARTLOGIC.getId();
 		Class<? extends BCPartLogic> clazz = Index.VALUES[id].get();
 		BCPartLogic logic = null;
 		try {
-			logic = clazz.newInstance();
-			logic.id = id;
+			Constructor<? extends BCPartLogic> construct = clazz
+					.getConstructor(BCMultiPart.class, Index.class);
+			logic = construct.newInstance(part, Index.VALUES[id]);
 		} catch (InstantiationException e) {
 			BCLog.warn("Unable to create logic: ", e);
 		} catch (IllegalAccessException e) {
+			BCLog.warn("Unable to create logic: ", e);
+		} catch (NoSuchMethodException e) {
+			BCLog.warn("Unable to create logic: ", e);
+		} catch (SecurityException e) {
+			BCLog.warn("Unable to create logic: ", e);
+		} catch (IllegalArgumentException e) {
+			BCLog.warn("Unable to create logic: ", e);
+		} catch (InvocationTargetException e) {
 			BCLog.warn("Unable to create logic: ", e);
 		}
 		return logic;
 	}
 
-	protected BCMultiPart part;
+	protected final BCMultiPart part;
 
-	protected int id;
+	protected final Index id;
 
-	public void setPart(BCMultiPart part) {
+	public BCPartLogic(BCMultiPart part, Index index) {
 		this.part = part;
+		this.id = index;
 	}
 
 	public BCMultiPart getPart() {
 		return part;
 	}
 
-	public int getId() {
+	public Index getId() {
 		return id;
 	}
 

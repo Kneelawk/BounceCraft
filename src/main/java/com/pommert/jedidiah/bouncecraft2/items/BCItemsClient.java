@@ -12,7 +12,7 @@ public class BCItemsClient {
 	@SideOnly(Side.CLIENT)
 	public static void init() {
 		MinecraftForgeClient.registerItemRenderer(
-				BCItems.items.get("itemTestMultiPart"),
+				BCItems.items.get("itemBCMultiPart"),
 				new ItemRenderTestMultipart());
 	}
 }

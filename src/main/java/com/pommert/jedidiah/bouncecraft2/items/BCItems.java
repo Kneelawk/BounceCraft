@@ -12,7 +12,7 @@ public class BCItems {
 	public static final TreeMap<String, BCItem> items = new TreeMap<String, BCItem>();
 
 	public static void init() {
-		addItem(new ItemBCMultipart(), "itemTestMultiPart");
+		addItem(new ItemBCMultipart(), "itemBCMultiPart");
 	}
 
 	public static void addItem(BCItem item, String name) {

@@ -175,3 +175,62 @@ java.lang.AssertionError: assertion failed: Expected exactly one type parameter,
 2014-08-03 13:03:05,555  WARN [ModalContext] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
 2014-08-03 13:03:12,772  WARN [main] - ImplicitHighlightingPresenter - Timeout while waiting for `askLoadedTyped` during implicit highlighting.
 2014-08-03 13:04:24,224 ERROR [ModalContext] - System.err - Unable to construct FQN from 'java.com.pommert.jedidiah.bouncecraft'
+2014-08-03 15:10:23,565 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.MissingRequirementError: class com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index[] in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:17)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:18)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:53)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:66)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:102)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:121)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global$$anonfun$pollForWork$1.apply$mcV$sp(Global.scala:446)
+	at scala.util.control.Breaks.breakable(Breaks.scala:38)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:420)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2014-08-03 15:12:39,204 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.MissingRequirementError: class int in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:17)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:18)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:53)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:66)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:102)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:121)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global$$anonfun$pollForWork$1.apply$mcV$sp(Global.scala:446)
+	at scala.util.control.Breaks.breakable(Breaks.scala:38)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:420)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2014-08-03 15:28:47,014 ERROR [Worker-2] - System.err - SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2014-08-03 15:28:47,014 ERROR [Worker-2] - System.err - SLF4J: Defaulting to no-operation (NOP) logger implementation
+2014-08-03 15:28:47,014 ERROR [Worker-2] - System.err - SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2014-08-03 16:58:03,689 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.MissingRequirementError: class java.lang.Class<> in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:17)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:18)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:53)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:66)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:102)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:121)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global$$anonfun$pollForWork$1.apply$mcV$sp(Global.scala:446)
+	at scala.util.control.Breaks.breakable(Breaks.scala:38)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:420)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+2014-08-03 17:19:02,487 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error during askOption
+scala.reflect.internal.MissingRequirementError: class int in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:17)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:18)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:53)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:66)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:102)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:121)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global$$anonfun$pollForWork$1.apply$mcV$sp(Global.scala:446)
+	at scala.util.control.Breaks.breakable(Breaks.scala:38)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:420)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)

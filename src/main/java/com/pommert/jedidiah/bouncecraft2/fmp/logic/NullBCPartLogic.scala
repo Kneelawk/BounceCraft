@@ -7,8 +7,10 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.nbt.NBTTagCompound
 import codechicken.lib.data.MCDataInput
 import codechicken.lib.data.MCDataOutput
+import com.pommert.jedidiah.bouncecraft2.fmp.BCMultiPart
+import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index
 
-class NullBCPartLogic extends BCPartLogic {
+class NullBCPartLogic(part: BCMultiPart, index: Index) extends BCPartLogic(part, index) {
 
 	def getItem = null
 

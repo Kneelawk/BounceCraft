@@ -24,12 +24,14 @@ import net.minecraft.client.Minecraft
 import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic
 import org.lwjgl.opengl.GL11
 import com.pommert.jedidiah.bouncecraft2.log.BCLog
+import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index
 
-class BCMultiPart(f: ForgeDirection, l: BCPartLogic) extends TCuboidPart {
+class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPart {
 
 	var facing: ForgeDirection = f
 	BCLog.info("Placed: " + facing)
-	var logic: BCPartLogic = if (l != null) l else BCPartLogic.newLogic(0)
+	var rotation: Byte = r
+	var logic: BCPartLogic = if (l != null) l else BCPartLogic.newLogic(Index.NULL_BCPARTLOGIC.getId, this)
 
 	@SideOnly(Side.CLIENT)
 	val texture = logic.getTexture()
@@ -37,7 +39,7 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic) extends TCuboidPart {
 	@SideOnly(Side.CLIENT)
 	val model = AdvancedModelLoader.loadModel(logic.getModel())
 
-	def this() = this(ForgeDirection.DOWN, null)
+	def this() = this(ForgeDirection.DOWN, null, 0)
 
 	@Override
 	def getBounds = BCMultiPart.sides(facing.ordinal)
@@ -48,28 +50,38 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic) extends TCuboidPart {
 	@Override
 	override def load(tag: NBTTagCompound) {
 		facing = ForgeDirection.VALID_DIRECTIONS(tag.getByte("facing"))
-		logic = BCPartLogic.newLogic(tag.getInteger("logic_id"))
+		rotation = tag.getByte("rotation")
+		val id =
+			if (tag.hasKey("logic_id")) {
+				tag.getInteger("logic_id")
+			} else {
+				Index.NULL_BCPARTLOGIC.getId
+			}
+		logic = BCPartLogic.newLogic(id, this)
 		logic.load(tag)
 	}
 
 	@Override
 	override def save(tag: NBTTagCompound) {
-		tag.setByte("facing", if (facing != null) facing.ordinal().asInstanceOf[Byte] else 0)
-		tag.setInteger("logic_id", logic.getId())
+		tag.setByte("facing", if (facing != null) facing.ordinal.asInstanceOf[Byte] else 0)
+		tag.setByte("rotation", rotation)
+		tag.setInteger("logic_id", logic.getId.getId)
 		logic.save(tag)
 	}
 
 	@Override
 	override def readDesc(packet: MCDataInput) {
 		facing = ForgeDirection.VALID_DIRECTIONS(packet.readByte())
-		logic = BCPartLogic.newLogic(packet.readInt())
+		rotation = packet.readByte()
+		logic = BCPartLogic.newLogic(packet.readInt(), this)
 		logic.readDesc(packet)
 	}
 
 	@Override
 	override def writeDesc(packet: MCDataOutput) {
-		packet.writeByte(if (facing != null) facing.ordinal().asInstanceOf[Byte] else 0)
-		packet.writeInt(logic.getId())
+		packet.writeByte(if (facing != null) facing.ordinal.asInstanceOf[Byte] else 0)
+		packet.writeByte(rotation)
+		packet.writeInt(logic.getId.getId)
 		logic.writeDesc(packet)
 	}
 
@@ -90,7 +102,7 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic) extends TCuboidPart {
 		if (pass == 0) {
 			GL11.glPushMatrix()
 			GL11.glTranslated(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5)
-			BCMultiPart.renderTranslations(facing.ordinal())()
+			BCMultiPart.renderTransformations(facing.ordinal)(rotation)
 			Minecraft.getMinecraft().renderEngine.bindTexture(texture)
 			model.renderAll()
 			GL11.glPopMatrix()
@@ -106,32 +118,43 @@ object BCMultiPart {
 		sides(i) = sides(0).copy().apply(t)
 	}
 
-	val renderTranslations: Array[() => Unit] = Array(
-		() => {
+	val renderTransformations: Array[(Byte) => Unit] = Array(
+		(rotation: Byte) => {
 			GL11.glTranslated(0, -0.5 + 1D / 32D, 0)
 			GL11.glRotated(180, 0, 0, 1)
+			GL11.glRotated(90 * rotation, 0, 1, 0)
 			GL11.glTranslated(-0.5, -1D / 32D, -0.5)
 		},
-		() => {
+		(rotation: Byte) => {
+			var r = if (rotation.&(1) == 0) {
+				rotation
+			} else {
+				(rotation + 2) % 4
+			}
+			GL11.glRotated(90 * r, 0, 1, 0)
 			GL11.glTranslated(-0.5, 0.5 - 1D / 16D, -0.5)
 		},
-		() => {
+		(rotation: Byte) => {
+			GL11.glRotated(90 * rotation, 0, 1, 0)
 			GL11.glTranslated(-0.5, -0.5, -0.5 + 1D / 16D)
 			GL11.glRotated(270, 1, 0, 0)
 		},
-		() => {
+		(rotation: Byte) => {
 			GL11.glTranslated(0, 0, 0.5 - 1D / 32D)
 			GL11.glRotated(180, 0, 1, 0)
+			GL11.glRotated(90 * rotation, 0, 1, 0)
 			GL11.glTranslated(-0.5, -0.5, 1D / 32D)
 			GL11.glRotated(270, 1, 0, 0)
 		},
-		() => {
+		(rotation: Byte) => {
 			GL11.glTranslated(-0.5 + 1D / 16D, 0, 0)
 			GL11.glRotated(90, 0, 0, 1)
 			GL11.glRotated(90, 0, 1, 0)
+			GL11.glRotated(90 * rotation, 0, 1, 0)
 			GL11.glTranslated(-0.5, 0, -0.5)
 		},
-		() => {
+		(rotation: Byte) => {
+			GL11.glRotated(90 * rotation, 0, 1, 0)
 			GL11.glTranslated(0.5, 0, 0)
 			GL11.glRotated(90, 0, 0, 1)
 			GL11.glRotated(90, 0, 1, 0)
