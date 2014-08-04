@@ -1,35 +1,32 @@
 package com.pommert.jedidiah.bouncecraft2.fmp
 
-import codechicken.multipart.TCuboidPart
+import java.util.Arrays
+import org.lwjgl.opengl.GL11
+import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic
+import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index
+import com.pommert.jedidiah.bouncecraft2.log.BCLog
+import codechicken.lib.data.MCDataInput
+import codechicken.lib.data.MCDataOutput
 import codechicken.lib.vec.Cuboid6
 import codechicken.lib.vec.Rotation
 import codechicken.lib.vec.Vector3
-import net.minecraftforge.client.model.AdvancedModelLoader
-import com.pommert.jedidiah.bouncecraft2.ref.ModRef
-import net.minecraft.util.ResourceLocation
-import net.minecraftforge.client.model.obj.WavefrontObject
-import net.minecraftforge.common.util.ForgeDirection
-import net.minecraft.nbt.NBTTagCompound
-import codechicken.lib.data.MCDataInput
-import codechicken.lib.data.MCDataOutput
-import net.minecraft.item.ItemStack
-import com.pommert.jedidiah.bouncecraft2.items.BCItems
-import java.util.Arrays
-import java.lang.{ Iterable => JIterable }
-import net.minecraft.util.MovingObjectPosition
-import net.minecraft.entity.Entity
+import codechicken.multipart.TCuboidPart
 import cpw.mods.fml.relauncher.SideOnly
-import cpw.mods.fml.relauncher.Side
 import net.minecraft.client.Minecraft
-import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic
-import org.lwjgl.opengl.GL11
-import com.pommert.jedidiah.bouncecraft2.log.BCLog
-import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index
+import net.minecraft.entity.Entity
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.MovingObjectPosition
+import net.minecraft.util.ResourceLocation
+import net.minecraftforge.client.model.AdvancedModelLoader
+import net.minecraftforge.common.util.ForgeDirection
+import com.pommert.jedidiah.bouncecraft2.items.BCItems
+import cpw.mods.fml.relauncher.Side
 
 class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPart {
 
 	var facing: ForgeDirection = f
-	BCLog.info("Placed: " + facing)
 	var rotation: Byte = r
 	var logic: BCPartLogic = if (l != null) l else BCPartLogic.newLogic(Index.NULL_BCPARTLOGIC.getId, this)
 
@@ -97,6 +94,17 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 	override def onEntityCollision(entity: Entity) { logic.onEntityCollision(entity) }
 
 	@Override
+	override def activate(player: EntityPlayer, hit: MovingObjectPosition, stack: ItemStack): Boolean = {
+		val stackName = stack.getItem().getUnlocalizedName(stack).toLowerCase()
+		val isScrewDriver = (stackName.contains("screw") && stackName.contains("driver")) || stackName.contains("wrench") || stackName.contains("hammer")
+		if (isScrewDriver) {
+			rotation = (rotation + 1).asInstanceOf[Byte]
+			rotation = (rotation % 4).asInstanceOf[Byte]
+		}
+		logic.activate(player, hit, stack) || isScrewDriver
+	}
+
+	@Override
 	@SideOnly(Side.CLIENT)
 	override def renderDynamic(pos: Vector3, f: Float, pass: Int) {
 		if (pass == 0) {
@@ -126,7 +134,7 @@ object BCMultiPart {
 			GL11.glTranslated(-0.5, -1D / 32D, -0.5)
 		},
 		(rotation: Byte) => {
-			var r = if (rotation.&(1) == 0) {
+			val r = if (rotation.&(1) == 0) {
 				rotation
 			} else {
 				(rotation + 2) % 4
@@ -135,14 +143,24 @@ object BCMultiPart {
 			GL11.glTranslated(-0.5, 0.5 - 1D / 16D, -0.5)
 		},
 		(rotation: Byte) => {
-			GL11.glRotated(90 * rotation, 0, 1, 0)
+			val r = if (rotation.&(1) == 0) {
+				rotation
+			} else {
+				(rotation + 2) % 4
+			}
+			GL11.glRotated(90 * r, 0, 0, 1)
 			GL11.glTranslated(-0.5, -0.5, -0.5 + 1D / 16D)
 			GL11.glRotated(270, 1, 0, 0)
 		},
 		(rotation: Byte) => {
+			val r = if (rotation.&(1) == 0) {
+				rotation
+			} else {
+				(rotation + 2) % 4
+			}
 			GL11.glTranslated(0, 0, 0.5 - 1D / 32D)
 			GL11.glRotated(180, 0, 1, 0)
-			GL11.glRotated(90 * rotation, 0, 1, 0)
+			GL11.glRotated(90 * r, 0, 0, 1)
 			GL11.glTranslated(-0.5, -0.5, 1D / 32D)
 			GL11.glRotated(270, 1, 0, 0)
 		},
@@ -154,7 +172,7 @@ object BCMultiPart {
 			GL11.glTranslated(-0.5, 0, -0.5)
 		},
 		(rotation: Byte) => {
-			GL11.glRotated(90 * rotation, 0, 1, 0)
+			GL11.glRotated(90 * rotation, 1, 0, 0)
 			GL11.glTranslated(0.5, 0, 0)
 			GL11.glRotated(90, 0, 0, 1)
 			GL11.glRotated(90, 0, 1, 0)

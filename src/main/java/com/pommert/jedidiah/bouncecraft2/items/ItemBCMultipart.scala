@@ -21,13 +21,13 @@ class ItemBCMultipart extends BCItem with TItemMultiPart {
 		val part = MultiPartRegistry.createPart("bc_multipart", world.isRemote).asInstanceOf[BCMultiPart]
 		part.facing = ForgeDirection.VALID_DIRECTIONS(side).getOpposite()
 		part.logic = BCPartLogic.newLogic(item.getItemDamage(), part)
-		BCLog.info("Player facing: " + player.rotationYawHead)
 		if(side == 0 || side == 1){
 			part.rotation = (((player.rotationYawHead + 45) % 340) / 90).floor.asInstanceOf[Byte]
 		}
 		part
 	}
 
+	@Override
 	override def onItemUse(item: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
 		val pos = new BlockCoord(x, y, z)
 		val vhit = new Vector3(hitX, hitY, hitZ)

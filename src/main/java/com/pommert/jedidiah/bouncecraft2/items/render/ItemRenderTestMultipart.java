@@ -84,7 +84,7 @@ public class ItemRenderTestMultipart implements IItemRenderer {
 				.bindTexture(textures[damage]);
 
 		// Render
-		models[damage].renderPart("Cube");
+		models[damage].renderAll();
 
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();

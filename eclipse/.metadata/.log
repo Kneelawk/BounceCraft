@@ -3695,3 +3695,37 @@ Caused by: java.lang.AssertionError: assertion failed: Race condition detected: 
 	at java.lang.reflect.Method.invoke(Method.java:483)
 	at org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:56)
 	... 40 more
+
+!ENTRY org.scala-ide.sdt.core 4 0 2014-08-03 22:57:24.675
+!MESSAGE Error during askOption
+!STACK 0
+scala.reflect.internal.MissingRequirementError: class char in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:17)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:18)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:53)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:66)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:102)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:121)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global$$anonfun$pollForWork$1.apply$mcV$sp(Global.scala:446)
+	at scala.util.control.Breaks.breakable(Breaks.scala:38)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:420)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)
+
+!ENTRY org.scala-ide.sdt.core 4 0 2014-08-03 23:07:03.153
+!MESSAGE Error during askOption
+!STACK 0
+scala.reflect.internal.MissingRequirementError: class void in compiler mirror not found.
+	at scala.reflect.internal.MissingRequirementError$.signal(MissingRequirementError.scala:17)
+	at scala.reflect.internal.MissingRequirementError$.notFound(MissingRequirementError.scala:18)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:53)
+	at scala.reflect.internal.Mirrors$RootsBase.getModuleOrClass(Mirrors.scala:66)
+	at scala.reflect.internal.Mirrors$RootsBase.getClassByName(Mirrors.scala:102)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:122)
+	at scala.tools.eclipse.completion.ScalaJavaCompletionProposalComputer$$anonfun$1$$anonfun$apply$1.apply(ScalaJavaCompletionProposalComputer.scala:121)
+	at scala.tools.nsc.util.InterruptReq.execute(InterruptReq.scala:26)
+	at scala.tools.nsc.interactive.Global$$anonfun$pollForWork$1.apply$mcV$sp(Global.scala:446)
+	at scala.util.control.Breaks.breakable(Breaks.scala:38)
+	at scala.tools.nsc.interactive.Global.pollForWork(Global.scala:420)
+	at scala.tools.nsc.interactive.PresentationCompilerThread.run(PresentationCompilerThread.scala:22)

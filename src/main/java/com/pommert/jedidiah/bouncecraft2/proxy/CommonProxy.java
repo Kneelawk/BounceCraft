@@ -15,5 +15,6 @@ public abstract class CommonProxy implements IProxy {
 	@Override
 	public void init() {
 		BCFMP.init();
+		BCItems.initCrafting();
 	}
 }

@@ -4,8 +4,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
 import codechicken.lib.data.MCDataInput;
 import codechicken.lib.data.MCDataOutput;
@@ -127,5 +129,10 @@ public abstract class BCPartLogic {
 	public abstract void writeDesc(MCDataOutput packet);
 
 	public void onEntityCollision(Entity entity) {
+	}
+
+	public boolean activate(EntityPlayer player, MovingObjectPosition pos,
+			ItemStack stack) {
+		return false;
 	}
 }
