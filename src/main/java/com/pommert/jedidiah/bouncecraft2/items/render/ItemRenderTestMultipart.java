@@ -1,5 +1,7 @@
 package com.pommert.jedidiah.bouncecraft2.items.render;
 
+import java.util.Set;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
@@ -10,21 +12,28 @@ import org.lwjgl.opengl.GL11;
 
 import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic;
 import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index;
-import com.pommert.jedidiah.bouncecraft2.ref.ModRef;
 
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ItemRenderTestMultipart implements IItemRenderer {
 
-	private static final IModelCustom[] models = new IModelCustom[Index.VALUES.length];
-	private static final ResourceLocation[] textures = new ResourceLocation[Index.VALUES.length];
+	private static final IModelCustom[] models = new IModelCustom[Index.VALUES
+			.largestKey() + 1];
+	private static final ResourceLocation[] textures = new ResourceLocation[Index.VALUES
+			.largestKey() + 1];
 
-	static {
-		for (int i = 0; i < Index.VALUES.length; i++) {
-			if (Index.VALUES[i] != null) {
-				BCPartLogic logic = BCPartLogic.newLogic(i, null);
-				models[i] = AdvancedModelLoader.loadModel(logic.getModel());
-				textures[i] = logic.getTexture();
+	public static void createTextures() {
+		Set<Object> keys = Index.VALUES.keySet();
+		for (Object key : keys) {
+			if (Index.VALUES.containsKey(key)) {
+				BCPartLogic logic = BCPartLogic.newLogic(
+						((Byte) key).byteValue(), null);
+				models[((Byte) key).byteValue()] = AdvancedModelLoader
+						.loadModel(logic.getModel());
+				textures[((Byte) key).byteValue()] = logic.getTexture();
 			}
 		}
 	}
@@ -67,7 +76,7 @@ public class ItemRenderTestMultipart implements IItemRenderer {
 	}
 
 	private void render(float x, float y, float z, int damage) {
-		if (Index.VALUES[damage] == null)
+		if (Index.VALUES.get((byte) damage) == null)
 			damage = Index.NULL_BCPARTLOGIC.getId();
 
 		GL11.glPushMatrix();

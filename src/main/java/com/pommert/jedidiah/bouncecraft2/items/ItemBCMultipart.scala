@@ -26,7 +26,7 @@ class ItemBCMultipart extends BCItem with TItemMultiPart {
 	def newPart(item: ItemStack, player: EntityPlayer, world: World, pos: BlockCoord, side: Int, vhit: Vector3): TMultiPart = {
 		val part = MultiPartRegistry.createPart("bc_multipart", world.isRemote).asInstanceOf[BCMultiPart]
 		part.facing = ForgeDirection.VALID_DIRECTIONS(side).getOpposite
-		part.setLogic(BCPartLogic.newLogic(item.getItemDamage(), part))
+		part.setLogic(BCPartLogic.newLogic(item.getItemDamage().asInstanceOf[Byte], part))
 		if (side == 0 || side == 1) {
 			part.rotation = (((player.rotationYawHead + 45) % 340) / 90).floor.asInstanceOf[Byte]
 		}
@@ -92,10 +92,12 @@ class ItemBCMultipart extends BCItem with TItemMultiPart {
 	@SideOnly(Side.CLIENT)
 	override def getSubItems(item: Item, ct: CreativeTabs, list$: JList[_]) {
 		val list = list$.asInstanceOf[JList[ItemStack]]
-		val values = Index.values
+		val values = Index.VALUES.keySet().iterator()
 		val bcitem = BCItems.items.get("itemBCMultiPart")
-		for (i <- 0 to (values.length - 2)) {
-			list.add(new ItemStack(bcitem, 1, values(i).getId()))
+		while (values.hasNext()) {
+			val id = values.next()
+			if (id != Index.NULL_BCPARTLOGIC.getId())
+				list.add(new ItemStack(bcitem, 1, id))
 		}
 	}
 }

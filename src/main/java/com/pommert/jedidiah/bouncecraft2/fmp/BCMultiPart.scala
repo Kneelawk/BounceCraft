@@ -23,6 +23,8 @@ import net.minecraftforge.client.model.AdvancedModelLoader
 import net.minecraftforge.common.util.ForgeDirection
 import com.pommert.jedidiah.bouncecraft2.items.BCItems
 import cpw.mods.fml.relauncher.Side
+import java.lang.Iterable
+import java.util.ArrayList
 
 class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPart {
 
@@ -51,6 +53,11 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 
 	@Override
 	def getBounds = BCMultiPart.sides(facing.ordinal)
+	
+	@Override
+	override def getCollisionBoxes:Iterable[Cuboid6] = {
+		logic.getCollisionBoxes()
+	}
 
 	@Override
 	def getType = "bc_multipart"
@@ -65,7 +72,7 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 			} else {
 				Index.NULL_BCPARTLOGIC.getId
 			}
-		logic = BCPartLogic.newLogic(id, this)
+		logic = BCPartLogic.newLogic(id.byteValue(), this)
 		logic.load(tag)
 		setLogicClient()
 	}
@@ -82,7 +89,7 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 	override def readDesc(packet: MCDataInput) {
 		facing = ForgeDirection.VALID_DIRECTIONS(packet.readByte())
 		rotation = packet.readByte()
-		logic = BCPartLogic.newLogic(packet.readInt(), this)
+		logic = BCPartLogic.newLogic(packet.readInt().byteValue(), this)
 		logic.readDesc(packet)
 		setLogicClient()
 	}

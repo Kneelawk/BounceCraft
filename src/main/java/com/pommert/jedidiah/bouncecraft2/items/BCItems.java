@@ -2,8 +2,6 @@ package com.pommert.jedidiah.bouncecraft2.items;
 
 import java.util.TreeMap;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import com.pommert.jedidiah.bouncecraft2.creativetabs.BCCreativeTabs;

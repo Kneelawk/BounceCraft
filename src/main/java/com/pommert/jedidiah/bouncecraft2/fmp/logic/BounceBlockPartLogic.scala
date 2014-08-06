@@ -17,6 +17,9 @@ import com.pommert.jedidiah.bouncecraft2.log.BCLog
 import cpw.mods.fml.relauncher.SideOnly
 import cpw.mods.fml.relauncher.Side
 import com.pommert.jedidiah.bouncecraft2.util.EntityUtil
+import codechicken.lib.vec.Cuboid6
+import java.util.Arrays
+import java.lang.Iterable
 
 class BounceBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartLogic(part, index) {
 
@@ -33,4 +36,7 @@ class BounceBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartLogic(
 		EntityUtil.fall(entity)
 		PositionableMotionLogic.rotations(part.facing.getOpposite().ordinal())(entity, 1)
 	}
+
+	@Override
+	override def getCollisionBoxes: Iterable[Cuboid6] = Arrays.asList[Cuboid6]()
 }
