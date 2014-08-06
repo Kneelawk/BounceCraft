@@ -14,8 +14,9 @@
 <fullyQualifiedTypeName name="net.minecraft.init.Blocks"/>
 <fullyQualifiedTypeName name="com.pommert.jedidiah.bouncecraft2.items.BCItems"/>
 <fullyQualifiedTypeName name="net.minecraft.item.Item"/>
-<fullyQualifiedTypeName name="com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index"/>
-<fullyQualifiedTypeName name="net.minecraft.entity.Entity"/>
-<fullyQualifiedTypeName name="cpw.mods.fml.relauncher.Side"/>
 <fullyQualifiedTypeName name="com.pommert.jedidiah.bouncecraft2.creativetabs.BCCreativeTabs"/>
+<fullyQualifiedTypeName name="java.lang.reflect.Method"/>
+<fullyQualifiedTypeName name="com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index"/>
+<fullyQualifiedTypeName name="cpw.mods.fml.relauncher.Side"/>
+<fullyQualifiedTypeName name="net.minecraft.entity.Entity"/>
 </qualifiedTypeNameHistroy>
