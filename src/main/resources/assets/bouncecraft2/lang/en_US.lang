@@ -1,2 +1,5 @@
 item.itemBCMultiPart|0.name=Bounce Block
+item.itemBCMultiPart|1.name=Low Bounce Block
 item.itemScrewDriver.name=Screw Driver
+
+itemGroup.tagBounceCraft.name=Bounce Craft

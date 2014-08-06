@@ -6,6 +6,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import com.pommert.jedidiah.bouncecraft2.creativetabs.BCCreativeTabs;
 import com.pommert.jedidiah.bouncecraft2.ref.ModRef;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -23,7 +24,7 @@ public class BCItems {
 		item.setTextureName(ModRef.MOD_ID + ":" + name);
 		GameRegistry.registerItem(item, name, ModRef.MOD_ID);
 		items.put(name, item);
-		item.setCreativeTab(CreativeTabs.tabBlock);
+		item.setCreativeTab(BCCreativeTabs.tabBounceCraft());
 		return item;
 	}
 

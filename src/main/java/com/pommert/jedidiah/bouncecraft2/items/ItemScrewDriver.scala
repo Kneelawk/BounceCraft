@@ -20,7 +20,7 @@ import com.pommert.jedidiah.bouncecraft2.log.BCLog
 class ItemScrewDriver extends BCItem {
 
 	@Override
-	def hasSubTypes = false
+	override def getHasSubtypes = false
 
 	@Override
 	override def onItemUseFirst(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean = {

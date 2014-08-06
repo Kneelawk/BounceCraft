@@ -13,6 +13,7 @@ import codechicken.lib.data.MCDataInput;
 import codechicken.lib.data.MCDataOutput;
 
 import com.pommert.jedidiah.bouncecraft2.fmp.BCMultiPart;
+import com.pommert.jedidiah.bouncecraft2.items.BCItems;
 import com.pommert.jedidiah.bouncecraft2.log.BCLog;
 
 import cpw.mods.fml.relauncher.Side;
@@ -21,7 +22,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 public abstract class BCPartLogic {
 
 	public static enum Index {
-		BOUNCE_BLOCK_BCPARTLOGIC(BounceBlockPartLogic.class), NULL_BCPARTLOGIC(
+		BOUNCE_BLOCK_BCPARTLOGIC(BounceBlockPartLogic.class), LOW_BOUNCE_BLOCK_BCPARTLOGIC(
+				LowBounceBlockPartLogic.class), MEDIUM_BOUNCE_BLOCK_BCPARTLOGIC(
+				MediumBounceBlockPartLogic.class), HIGH_BOUNCE_BLOCK_BCPARTLOGIC(
+				HighBounceBlockPartLogic.class), NULL_BCPARTLOGIC(
 				NullBCPartLogic.class, (byte) (Byte.MAX_VALUE));
 
 		public static final Index[] VALUES = createValues();
@@ -112,7 +116,10 @@ public abstract class BCPartLogic {
 		return id;
 	}
 
-	public abstract ItemStack getItem();
+	public ItemStack getItem() {
+		return new ItemStack(BCItems.items.get("itemBCMultiPart"), 1,
+				id.getId());
+	}
 
 	@SideOnly(Side.CLIENT)
 	public abstract ResourceLocation getTexture();
@@ -120,13 +127,17 @@ public abstract class BCPartLogic {
 	@SideOnly(Side.CLIENT)
 	public abstract ResourceLocation getModel();
 
-	public abstract void load(NBTTagCompound tag);
+	public void load(NBTTagCompound tag) {
+	}
 
-	public abstract void save(NBTTagCompound tag);
+	public void save(NBTTagCompound tag) {
+	}
 
-	public abstract void readDesc(MCDataInput packet);
+	public void readDesc(MCDataInput packet) {
+	}
 
-	public abstract void writeDesc(MCDataOutput packet);
+	public void writeDesc(MCDataOutput packet) {
+	}
 
 	public void onEntityCollision(Entity entity) {
 	}

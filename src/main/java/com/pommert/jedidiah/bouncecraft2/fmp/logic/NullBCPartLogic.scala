@@ -12,19 +12,14 @@ import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index
 
 class NullBCPartLogic(part: BCMultiPart, index: Index) extends BCPartLogic(part, index) {
 
-	def getItem = null
+	@Override
+	override def getItem = null
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	def getTexture = new ResourceLocation(ModRef.MOD_ID, "textures/blocks/blockMissingTexture.png")
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	def getModel = new ResourceLocation(ModRef.MOD_ID, "models/blockMissingTexture.obj")
-
-	def load(tag: NBTTagCompound) {}
-
-	def save(tag: NBTTagCompound) {}
-
-	def readDesc(packet: MCDataInput) {}
-
-	def writeDesc(packet: MCDataOutput) {}
 }

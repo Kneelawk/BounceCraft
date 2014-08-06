@@ -13,6 +13,12 @@ import net.minecraftforge.common.util.ForgeDirection
 import com.pommert.jedidiah.bouncecraft2.log.BCLog
 import com.pommert.jedidiah.bouncecraft2.fmp.BCMultiPart
 import codechicken.multipart.TileMultipart
+import net.minecraft.item.Item
+import net.minecraft.creativetab.CreativeTabs
+import java.util.{ List => JList }
+import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index
+import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.Side
 
 class ItemBCMultipart extends BCItem with TItemMultiPart {
 
@@ -21,7 +27,6 @@ class ItemBCMultipart extends BCItem with TItemMultiPart {
 		val part = MultiPartRegistry.createPart("bc_multipart", world.isRemote).asInstanceOf[BCMultiPart]
 		part.facing = ForgeDirection.VALID_DIRECTIONS(side).getOpposite
 		part.setLogic(BCPartLogic.newLogic(item.getItemDamage(), part))
-		BCLog.info("part.logic: " + part.logic)
 		if (side == 0 || side == 1) {
 			part.rotation = (((player.rotationYawHead + 45) % 340) / 90).floor.asInstanceOf[Byte]
 		}
@@ -81,5 +86,16 @@ class ItemBCMultipart extends BCItem with TItemMultiPart {
 	}
 
 	@Override
-	def hasSubTypes = true
+	override def getHasSubtypes = true
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	override def getSubItems(item: Item, ct: CreativeTabs, list$: JList[_]) {
+		val list = list$.asInstanceOf[JList[ItemStack]]
+		val values = Index.values
+		val bcitem = BCItems.items.get("itemBCMultiPart")
+		for (i <- 0 to (values.length - 2)) {
+			list.add(new ItemStack(bcitem, 1, values(i).getId()))
+		}
+	}
 }

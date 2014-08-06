@@ -10,32 +10,27 @@ import net.minecraft.nbt.NBTTagCompound
 import codechicken.lib.data.MCDataInput
 import codechicken.lib.data.MCDataOutput
 import net.minecraft.entity.Entity
+import net.minecraftforge.common.util.ForgeDirection
+import codechicken.lib.vec.Quat
+import codechicken.lib.vec.Vector3
+import com.pommert.jedidiah.bouncecraft2.log.BCLog
+import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.Side
+import com.pommert.jedidiah.bouncecraft2.util.EntityUtil
 
 class BounceBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartLogic(part, index) {
 
 	@Override
-	def getItem = new ItemStack(BCItems.items.get("itemBCMultiPart"), 1, 0)
-
-	@Override
+	@SideOnly(Side.CLIENT)
 	def getTexture = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockBounce.png")
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	def getModel = new ResourceLocation(ModRef.MOD_ID, "/models/blockBounce.obj")
 
 	@Override
-	def load(tag: NBTTagCompound) {}
-
-	@Override
-	def save(tag: NBTTagCompound) {}
-
-	@Override
-	def readDesc(packet: MCDataInput) {}
-
-	@Override
-	def writeDesc(packet: MCDataOutput) {}
-
-	@Override
 	override def onEntityCollision(entity: Entity) {
-		// TODO add moving stuff
+		EntityUtil.fall(entity)
+		PositionableMotionLogic.rotations(part.facing.getOpposite().ordinal())(entity, 1)
 	}
 }

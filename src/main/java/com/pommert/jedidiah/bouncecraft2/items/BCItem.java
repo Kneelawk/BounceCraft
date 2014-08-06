@@ -6,11 +6,11 @@ import net.minecraft.item.ItemStack;
 public abstract class BCItem extends Item {
 
 	public String getUnlocalizedName(ItemStack stack) {
-		if (hasSubTypes())
+		if (getHasSubtypes())
 			return super.getUnlocalizedName(stack) + "|"
 					+ stack.getItemDamage();
 		return super.getUnlocalizedName(stack);
 	}
 
-	public abstract boolean hasSubTypes();
+	public abstract boolean getHasSubtypes();
 }
