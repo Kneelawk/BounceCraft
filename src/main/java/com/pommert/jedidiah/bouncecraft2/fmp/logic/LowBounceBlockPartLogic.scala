@@ -27,9 +27,6 @@ class LowBounceBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartLog
 	@Override
 	override def onEntityCollision(entity: Entity) {
 		EntityUtil.fall(entity)
-		PositionableMotionLogic.rotations(part.facing.getOpposite().ordinal())(entity, 2)
+		PositionableMotionLogic.move(entity, part.facing.getOpposite(), 2)
 	}
-
-	@Override
-	override def getCollisionBoxes: Iterable[Cuboid6] = Arrays.asList[Cuboid6]()
 }

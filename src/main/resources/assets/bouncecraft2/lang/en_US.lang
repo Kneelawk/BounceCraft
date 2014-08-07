@@ -2,6 +2,10 @@ item.itemBCMultiPart|0.name=Bounce Block
 item.itemBCMultiPart|1.name=Low Bounce Block
 item.itemBCMultiPart|2.name=Medium Bounce Block
 item.itemBCMultiPart|3.name=High Bounce Block
+item.itemBCMultiPart|4.name=Speed Block
+item.itemBCMultiPart|5.name=Low Speed Block
+item.itemBCMultiPart|6.name=Medium Speed Block
+item.itemBCMultiPart|7.name=High Speed Block
 item.itemScrewDriver.name=Screw Driver
 
 itemGroup.tabBounceCraft=Bounce Craft

@@ -1,23 +1,24 @@
 package com.pommert.jedidiah.bouncecraft2.items
 
+import java.util.{ List => JList }
+import com.pommert.jedidiah.bouncecraft2.fmp.BCMultiPart
+import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic
+import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index
+import com.pommert.jedidiah.bouncecraft2.log.BCLog
 import codechicken.lib.vec.BlockCoord
 import codechicken.lib.vec.Vector3
 import codechicken.multipart.MultiPartRegistry
 import codechicken.multipart.TItemMultiPart
 import codechicken.multipart.TMultiPart
-import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic
+import codechicken.multipart.TileMultipart
+import cpw.mods.fml.relauncher.SideOnly
+import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
-import com.pommert.jedidiah.bouncecraft2.log.BCLog
-import com.pommert.jedidiah.bouncecraft2.fmp.BCMultiPart
-import codechicken.multipart.TileMultipart
-import net.minecraft.item.Item
-import net.minecraft.creativetab.CreativeTabs
-import java.util.{ List => JList }
-import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index
-import cpw.mods.fml.relauncher.SideOnly
+import com.pommert.jedidiah.bouncecraft2.util.NumberUtils
 import cpw.mods.fml.relauncher.Side
 
 class ItemBCMultipart extends BCItem with TItemMultiPart {
@@ -27,8 +28,10 @@ class ItemBCMultipart extends BCItem with TItemMultiPart {
 		val part = MultiPartRegistry.createPart("bc_multipart", world.isRemote).asInstanceOf[BCMultiPart]
 		part.facing = ForgeDirection.VALID_DIRECTIONS(side).getOpposite
 		part.setLogic(BCPartLogic.newLogic(item.getItemDamage().asInstanceOf[Byte], part))
+		val playerRot = NumberUtils.mod2(player.rotationYawHead, 0.0, 360.0)
 		if (side == 0 || side == 1) {
-			part.rotation = (((player.rotationYawHead + 45) % 340) / 90).floor.asInstanceOf[Byte]
+			part.rotation = (((playerRot + 45) % 360) / 90).floor.asInstanceOf[Byte]
+			BCLog.info((if (world.isRemote) "[Client] " else "[Server] ") + "Part rotation: " + part.rotation + ", player rotation: " + player.rotationYaw)
 		}
 		part
 	}

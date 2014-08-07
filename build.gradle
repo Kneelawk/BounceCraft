@@ -25,7 +25,7 @@ repositories {
 apply plugin: 'scala'
 apply plugin: 'forge'
 
-version = "1.7.10-0.0.1"
+version = "1.7.10-a0.0.1-SNAPSHOT"
 group= "com.pommert.jedidiah.bouncecraft2" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "BounceCraft2"
 

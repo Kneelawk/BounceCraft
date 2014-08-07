@@ -25,6 +25,10 @@ import com.pommert.jedidiah.bouncecraft2.items.BCItems
 import cpw.mods.fml.relauncher.Side
 import java.lang.Iterable
 import java.util.ArrayList
+import codechicken.lib.vec.BlockCoord
+import codechicken.multipart.TileMultipart
+import net.minecraft.world.World
+import scala.util.control.Breaks._
 
 class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPart {
 
@@ -53,9 +57,9 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 
 	@Override
 	def getBounds = BCMultiPart.sides(facing.ordinal)
-	
+
 	@Override
-	override def getCollisionBoxes:Iterable[Cuboid6] = {
+	override def getCollisionBoxes: Iterable[Cuboid6] = {
 		logic.getCollisionBoxes()
 	}
 
@@ -117,11 +121,45 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 	override def activate(player: EntityPlayer, hit: MovingObjectPosition, stack: ItemStack): Boolean = {
 		val stackName = stack.getItem().getUnlocalizedName(stack).toLowerCase()
 		val isScrewDriver = (stackName.contains("screw") && stackName.contains("driver")) || stackName.contains("wrench") || stackName.contains("hammer")
+		var worked = false
 		if (isScrewDriver) {
-			rotation = (rotation + 1).asInstanceOf[Byte]
-			rotation = (rotation % 4).asInstanceOf[Byte]
+			if (player.isSneaking()) {
+				var direction = facing;
+
+				breakable {
+					for (i <- 0 to 5) {
+						direction = ForgeDirection.VALID_DIRECTIONS((direction.ordinal() + 1) % 6)
+
+						if (compareDirection(world, new BlockCoord(x, y, z), direction))
+							break
+					}
+				}
+
+				if (!direction.equals(facing)) {
+					facing = direction;
+					worked = true
+				}
+			} else {
+				rotation = (rotation + 1).asInstanceOf[Byte]
+				rotation = (rotation % 4).asInstanceOf[Byte]
+			}
 		}
+
 		logic.activate(player, hit, stack) || isScrewDriver
+	}
+
+	def compareDirection(world: World, pos: BlockCoord, direction: ForgeDirection): Boolean = {
+		val tmp = TileMultipart.getTile(world, pos)
+		if (tmp == null) return true
+		val partList = tmp.partList
+		for (ct <- partList) {
+			if (ct.isInstanceOf[BCMultiPart]) {
+				val bcct = ct.asInstanceOf[BCMultiPart]
+				if (bcct.facing.equals(direction))
+					return false
+			}
+		}
+		true
 	}
 
 	@Override
