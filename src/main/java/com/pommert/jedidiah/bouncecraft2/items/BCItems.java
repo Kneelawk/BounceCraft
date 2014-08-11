@@ -14,6 +14,7 @@ public class BCItems {
 
 	public static void init() {
 		addItem(new ItemBCMultipart(), "itemBCMultiPart");
+		addItem(new ItemBCMultiblock(), "itemBCMultiBlock");
 		addItem(new ItemScrewDriver(), "itemScrewDriver").setMaxStackSize(1);
 	}
 

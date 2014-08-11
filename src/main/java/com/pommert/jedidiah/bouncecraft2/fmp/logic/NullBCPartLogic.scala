@@ -9,6 +9,7 @@ import codechicken.lib.data.MCDataInput
 import codechicken.lib.data.MCDataOutput
 import com.pommert.jedidiah.bouncecraft2.fmp.BCMultiPart
 import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index
+import com.pommert.jedidiah.bouncecraft2.ref.RecRef
 
 class NullBCPartLogic(part: BCMultiPart, index: Index) extends BCPartLogic(part, index) {
 
@@ -17,9 +18,9 @@ class NullBCPartLogic(part: BCMultiPart, index: Index) extends BCPartLogic(part,
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getTexture = new ResourceLocation(ModRef.MOD_ID, "textures/blocks/blockMissingTexture.png")
+	def getTexture = RecRef.Textures.NULL_BLOCK
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getModel = new ResourceLocation(ModRef.MOD_ID, "models/blockMissingTexture.obj")
+	def getModel = RecRef.Models.NULL_BLOCK
 }

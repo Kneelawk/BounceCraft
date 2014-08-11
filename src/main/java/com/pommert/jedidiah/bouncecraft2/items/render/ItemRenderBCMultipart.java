@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ItemRenderTestMultipart implements IItemRenderer {
+public class ItemRenderBCMultipart implements IItemRenderer {
 
 	private static final IModelCustom[] models = new IModelCustom[Index.VALUES
 			.largestKey() + 1];
@@ -38,7 +38,7 @@ public class ItemRenderTestMultipart implements IItemRenderer {
 		}
 	}
 
-	public ItemRenderTestMultipart() {
+	public ItemRenderBCMultipart() {
 	}
 
 	@Override

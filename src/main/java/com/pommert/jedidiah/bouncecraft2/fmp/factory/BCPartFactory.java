@@ -8,7 +8,7 @@ public class BCPartFactory implements IBCPartFactory {
 
 	@Override
 	public TMultiPart createPart(String name, boolean client) {
-		return new BCMultiPart();
+		return new BCMultiPart(client);
 	}
 
 }

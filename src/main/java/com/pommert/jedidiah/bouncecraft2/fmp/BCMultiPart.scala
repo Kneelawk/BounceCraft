@@ -30,7 +30,9 @@ import codechicken.multipart.TileMultipart
 import net.minecraft.world.World
 import scala.util.control.Breaks._
 
-class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPart {
+class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte, c: Boolean) extends TCuboidPart {
+	
+	val client = c
 
 	var facing: ForgeDirection = f
 	var rotation: Byte = r
@@ -53,7 +55,7 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 		model = AdvancedModelLoader.loadModel(logic.getModel())
 	}
 
-	def this() = this(ForgeDirection.DOWN, null, 0)
+	def this(client: Boolean) = this(ForgeDirection.DOWN, null, 0, client)
 
 	@Override
 	def getBounds = BCMultiPart.sides(facing.ordinal)
@@ -85,7 +87,7 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 	override def save(tag: NBTTagCompound) {
 		tag.setByte("facing", if (facing != null) facing.ordinal.asInstanceOf[Byte] else 0)
 		tag.setByte("rotation", rotation)
-		tag.setInteger("logic_id", logic.getId.getId)
+		tag.setByte("logic_id", logic.getId.getId)
 		logic.save(tag)
 	}
 
@@ -93,7 +95,7 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 	override def readDesc(packet: MCDataInput) {
 		facing = ForgeDirection.VALID_DIRECTIONS(packet.readByte())
 		rotation = packet.readByte()
-		logic = BCPartLogic.newLogic(packet.readInt().byteValue(), this)
+		logic = BCPartLogic.newLogic(packet.readByte(), this)
 		logic.readDesc(packet)
 		setLogicClient()
 	}
@@ -102,7 +104,7 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 	override def writeDesc(packet: MCDataOutput) {
 		packet.writeByte(if (facing != null) facing.ordinal.asInstanceOf[Byte] else 0)
 		packet.writeByte(rotation)
-		packet.writeInt(logic.getId.getId)
+		packet.writeByte(logic.getId.getId)
 		logic.writeDesc(packet)
 	}
 
@@ -142,10 +144,11 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte) extends TCuboidPar
 			} else {
 				rotation = (rotation + 1).asInstanceOf[Byte]
 				rotation = (rotation % 4).asInstanceOf[Byte]
+				worked = true
 			}
 		}
 
-		logic.activate(player, hit, stack) || isScrewDriver
+		logic.activate(player, hit, stack) || worked
 	}
 
 	def compareDirection(world: World, pos: BlockCoord, direction: ForgeDirection): Boolean = {

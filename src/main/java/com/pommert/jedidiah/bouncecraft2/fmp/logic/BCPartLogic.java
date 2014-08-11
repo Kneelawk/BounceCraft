@@ -44,6 +44,12 @@ public abstract class BCPartLogic {
 			register(HighBounceBlockPartLogic.class,
 					"HIGH_BOUNCE_BLOCK_BCPARTLOGIC");
 			register(SpeedBlockPartLogic.class, "SPEED_BLOCK_BCPARTLOGIC");
+			register(LowSpeedBlockPartLogic.class,
+					"LOW_SPEED_BLOCK_BCPARTLOGIC");
+			register(MediumSpeedBlockPartLogic.class,
+					"MEDIUM_SPEED_BLOCK_BCPARTLOGIC");
+			register(HighSpeedBlockPartLogic.class,
+					"HIGH_SPEED_BLOCK_BCPARTLOGIC");
 
 			// register other mod's logics
 			MinecraftForge.EVENT_BUS.post(new InitBounceCraftLogicEvent());

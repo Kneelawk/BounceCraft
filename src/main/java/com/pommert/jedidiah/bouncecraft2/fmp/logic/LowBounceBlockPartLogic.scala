@@ -13,16 +13,17 @@ import com.pommert.jedidiah.bouncecraft2.util.EntityUtil
 import java.lang.Iterable
 import codechicken.lib.vec.Cuboid6
 import java.util.Arrays
+import com.pommert.jedidiah.bouncecraft2.ref.RecRef
 
 class LowBounceBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartLogic(part, index) {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getModel = new ResourceLocation(ModRef.MOD_ID, "/models/blockLowBounce.obj")
+	def getModel = RecRef.Models.LOW_BOUNCE_BLOCK
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getTexture = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockLowBounce.png")
+	def getTexture = RecRef.Textures.LOW_BOUNCE_BLOCK
 
 	@Override
 	override def onEntityCollision(entity: Entity) {

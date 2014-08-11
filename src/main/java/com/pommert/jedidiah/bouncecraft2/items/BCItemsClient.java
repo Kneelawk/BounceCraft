@@ -3,7 +3,7 @@ package com.pommert.jedidiah.bouncecraft2.items;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 import com.pommert.jedidiah.bouncecraft2.items.render.ItemRenderScrewDriver;
-import com.pommert.jedidiah.bouncecraft2.items.render.ItemRenderTestMultipart;
+import com.pommert.jedidiah.bouncecraft2.items.render.ItemRenderBCMultipart;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -14,7 +14,7 @@ public class BCItemsClient {
 	public static void init() {
 		MinecraftForgeClient.registerItemRenderer(
 				BCItems.items.get("itemBCMultiPart"),
-				new ItemRenderTestMultipart());
+				new ItemRenderBCMultipart());
 		MinecraftForgeClient.registerItemRenderer(BCItems.items.get("itemScrewDriver"), new ItemRenderScrewDriver());
 	}
 }

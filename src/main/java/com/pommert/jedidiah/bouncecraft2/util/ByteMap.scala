@@ -4,7 +4,7 @@ import java.util.HashMap
 import java.util.Comparator
 import java.util.TreeMap
 
-class ByteComparator extends Comparator[Byte] {
+object ByteComparator extends Comparator[Byte] {
 	@Override
 	def compare(a: Byte, b: Byte): Int = {
 		if (a > b) { return 1 }
@@ -13,7 +13,7 @@ class ByteComparator extends Comparator[Byte] {
 	}
 }
 
-class ByteMap[V] extends TreeMap[Byte, V](new ByteComparator) {
+class ByteMap[V] extends TreeMap[Byte, V](ByteComparator) {
 
 	var largestKey = 0
 

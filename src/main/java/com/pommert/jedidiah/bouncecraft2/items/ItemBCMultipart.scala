@@ -25,13 +25,29 @@ class ItemBCMultipart extends BCItem with TItemMultiPart {
 
 	@Override
 	def newPart(item: ItemStack, player: EntityPlayer, world: World, pos: BlockCoord, side: Int, vhit: Vector3): TMultiPart = {
+		def compareDirection(): Boolean = {
+			val tmp = TileMultipart.getTile(world, pos)
+			if (tmp == null) return true
+			val partList = tmp.partList
+			for (ct <- partList) {
+				if (ct.isInstanceOf[BCMultiPart]) {
+					val bcct = ct.asInstanceOf[BCMultiPart]
+					if (bcct.facing.equals(ForgeDirection.VALID_DIRECTIONS(side).getOpposite))
+						return false
+				}
+			}
+			true
+		}
+
+		if (!compareDirection)
+			return null
+
 		val part = MultiPartRegistry.createPart("bc_multipart", world.isRemote).asInstanceOf[BCMultiPart]
 		part.facing = ForgeDirection.VALID_DIRECTIONS(side).getOpposite
 		part.setLogic(BCPartLogic.newLogic(item.getItemDamage().asInstanceOf[Byte], part))
 		val playerRot = NumberUtils.mod2(player.rotationYawHead, 0.0, 360.0)
 		if (side == 0 || side == 1) {
 			part.rotation = (((playerRot + 45) % 360) / 90).floor.asInstanceOf[Byte]
-			BCLog.info((if (world.isRemote) "[Client] " else "[Server] ") + "Part rotation: " + part.rotation + ", player rotation: " + player.rotationYaw)
 		}
 		part
 	}
@@ -44,23 +60,6 @@ class ItemBCMultipart extends BCItem with TItemMultiPart {
 		val d = getHitDepth(vhit, side)
 
 		def place(): Boolean = {
-			def compareDirection(): Boolean = {
-				val tmp = TileMultipart.getTile(world, pos)
-				if (tmp == null) return true
-				val partList = tmp.partList
-				for (ct <- partList) {
-					if (ct.isInstanceOf[BCMultiPart]) {
-						val bcct = ct.asInstanceOf[BCMultiPart]
-						if (bcct.facing.equals(ForgeDirection.VALID_DIRECTIONS(side).getOpposite))
-							return false
-					}
-				}
-				true
-			}
-
-			if (!compareDirection())
-				return false
-
 			val part = newPart(item, player, world, pos, side, vhit)
 
 			if (part == null || !TileMultipart.canPlacePart(world, pos, part))
