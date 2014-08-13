@@ -3,6 +3,7 @@
 /RemoteSystemsTempFiles/
 /.metadata/
 /.cache
+/.gradle/
 /eclipse/
 /.settings/
 /.classpath
