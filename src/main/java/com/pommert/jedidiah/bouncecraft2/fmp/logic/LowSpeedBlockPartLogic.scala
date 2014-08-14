@@ -14,11 +14,11 @@ class LowSpeedBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartLogi
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getModel = RecRef.Models.LOW_SPEED_BLOCK
+	def getModel = RecRef.Models.LOW_SPEED_PART
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getTexture = RecRef.Textures.LOW_SPEED_BLOCK
+	def getTexture = RecRef.Textures.LOW_SPEED_PART
 
 	@Override
 	override def onEntityCollision(entity: Entity) {

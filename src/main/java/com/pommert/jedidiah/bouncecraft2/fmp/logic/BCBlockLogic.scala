@@ -1,10 +1,8 @@
 package com.pommert.jedidiah.bouncecraft2.fmp.logic
 
-import java.lang.{ Iterable => JIterable }
 import java.util.Arrays
 import java.util.TreeMap
 import com.pommert.jedidiah.bouncecraft2.fmp.BCMultiBlock
-import com.pommert.jedidiah.bouncecraft2.fmp.logic.render.RotatableRender
 import com.pommert.jedidiah.bouncecraft2.items.BCItems
 import com.pommert.jedidiah.bouncecraft2.log.BCLog
 import com.pommert.jedidiah.bouncecraft2.util.ByteMap
@@ -19,6 +17,8 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.MovingObjectPosition
 import cpw.mods.fml.relauncher.Side
+import com.pommert.jedidiah.bouncecraft2.fmp.logic.NullBCBlockLogic
+import java.lang.{ Iterable => JIterable }
 
 abstract class BCBlockLogic(block: BCMultiBlock, id: BCBlockLogic.Index) {
 	def getBlock = block
@@ -28,9 +28,10 @@ abstract class BCBlockLogic(block: BCMultiBlock, id: BCBlockLogic.Index) {
 	def getItem = new ItemStack(BCItems.items.get("itemBCMultiBlock"), 1, id.getId)
 
 	@SideOnly(Side.CLIENT)
-	def render(pos: Vector3, f: Float) {
-		RotatableRender.render(pos, block.rotX, block.rotY, block.rotZ)
-	}
+	def renderBlock(pos: Vector3, f: Float)
+
+	@SideOnly(Side.CLIENT)
+	def renderHand()
 
 	def load(tag: NBTTagCompound) {}
 
@@ -42,7 +43,7 @@ abstract class BCBlockLogic(block: BCMultiBlock, id: BCBlockLogic.Index) {
 
 	def onEntityCollision(entity: Entity) {}
 
-	def activate(player: EntityPlayer, pos: MovingObjectPosition, item: ItemStack) {}
+	def activate(player: EntityPlayer, pos: MovingObjectPosition, item: ItemStack): Boolean = false
 
 	def getCollisionBoxes(): JIterable[Cuboid6] = {
 		Arrays.asList(block.getBounds)
@@ -72,10 +73,33 @@ object BCBlockLogic {
 			return constId
 		}
 
-		val NULL_BCBLOCKLOGIC: Index = null
+		var NULL_BCBLOCKLOGIC: Index = null
 
 		def init {
+			NULL_BCBLOCKLOGIC = register(classOf[NullBCBlockLogic], Byte.MaxValue, "NULL_BCBLOCKLOGIC")
+		}
 
+		def register(clazz: Class[_], name: String): Index = {
+			val i = new Index(clazz)
+			VALUES.put(i.getId, i)
+			if (indices.containsKey(name))
+				throw new IllegalArgumentException("Part Logic Index name: "
+					+ name + " is already taken!")
+			indices.put(name, i)
+			return i
+		}
+
+		def register(clazz: Class[_], id: Byte, name: String): Index = {
+			val i = new Index(clazz, id)
+			if (VALUES.containsKey(id))
+				throw new IllegalArgumentException("Part Logic Index id: " + id
+					+ " is already taken!")
+			VALUES.put(id, i)
+			if (indices.containsKey(name))
+				throw new IllegalArgumentException("Part Logic Index name: "
+					+ name + " is already taken!")
+			indices.put(name, i)
+			return i
 		}
 	}
 
@@ -87,7 +111,7 @@ object BCBlockLogic {
 		var logic: BCBlockLogic = null
 
 		try {
-			val construct = clazz.getConstructor(classOf[BCBlockLogic], classOf[Index])
+			val construct = clazz.getConstructor(classOf[BCMultiBlock], classOf[Index])
 			logic = construct.newInstance(block, Index.VALUES.get(id))
 		} catch {
 			case t: Throwable => BCLog.warn("Unable to create logic: ", t)

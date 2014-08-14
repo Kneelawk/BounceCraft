@@ -15,7 +15,7 @@ object ByteComparator extends Comparator[Byte] {
 
 class ByteMap[V] extends TreeMap[Byte, V](ByteComparator) {
 
-	var largestKey = 0
+	private var largestKey = 0
 
 	@Override
 	override def put(key: Byte, value: V): V = {

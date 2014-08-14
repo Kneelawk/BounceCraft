@@ -4,17 +4,18 @@ import net.minecraft.util.ResourceLocation
 
 object RecRef {
 	object Models {
+		val NULL_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partMissingTexture.obj")
 		val NULL_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/models/blockMissingTexture.obj")
 		
-		val BOUNCE_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/models/blockBounce.obj")
-		val LOW_BOUNCE_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/models/blockLowBounce.obj")
-		val MEDIUM_BOUNCE_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/models/blockMediumBounce.obj")
-		val HIGH_BOUNCE_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/models/blockHighBounce.obj")
+		val BOUNCE_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partBounce.obj")
+		val LOW_BOUNCE_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partLowBounce.obj")
+		val MEDIUM_BOUNCE_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partMediumBounce.obj")
+		val HIGH_BOUNCE_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partHighBounce.obj")
 
-		val SPEED_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/models/blockSpeed.obj")
-		val LOW_SPEED_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/models/blockLowSpeed.obj")
-		val MEDIUM_SPEED_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/models/blockMediumSpeed.obj")
-		val HIGH_SPEED_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/models/blockHighSpeed.obj")
+		val SPEED_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partSpeed.obj")
+		val LOW_SPEED_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partLowSpeed.obj")
+		val MEDIUM_SPEED_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partMediumSpeed.obj")
+		val HIGH_SPEED_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partHighSpeed.obj")
 		
 		val PUSH_GRATE = new ResourceLocation(ModRef.MOD_ID, "/models/blockGratePush.obj")
 		val MOVE_GRATE = new ResourceLocation(ModRef.MOD_ID, "/models/blockGrateMove.obj")
@@ -24,17 +25,18 @@ object RecRef {
 	}
 
 	object Textures {
-		val NULL_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/textures/blockMissingTexture.obj")
+		val NULL_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partMissingTexture.png")
+		val NULL_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockMissingTexture.png")
 		
-		val BOUNCE_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockBounce.png")
-		val LOW_BOUNCE_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockLowBounce.png")
-		val MEDIUM_BOUNCE_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockMediumBounce.png")
-		val HIGH_BOUNCE_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockHighBounce.png")
+		val BOUNCE_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partBounce.png")
+		val LOW_BOUNCE_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partLowBounce.png")
+		val MEDIUM_BOUNCE_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partMediumBounce.png")
+		val HIGH_BOUNCE_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partHighBounce.png")
 
-		val SPEED_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockSpeed.png")
-		val LOW_SPEED_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockLowSpeed.png")
-		val MEDIUM_SPEED_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockMediumSpeed.png")
-		val HIGH_SPEED_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockHighSpeed.png")
+		val SPEED_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partSpeed.png")
+		val LOW_SPEED_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partLowSpeed.png")
+		val MEDIUM_SPEED_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partMediumSpeed.png")
+		val HIGH_SPEED_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partHighSpeed.png")
 		
 		val PUSH_GRATE = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockGratePush.png")
 		val MOVE_GRATE = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockGrateMove.png")

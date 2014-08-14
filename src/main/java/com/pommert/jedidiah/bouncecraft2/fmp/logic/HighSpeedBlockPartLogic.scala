@@ -14,11 +14,11 @@ class HighSpeedBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartLog
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getModel = RecRef.Models.HIGH_SPEED_BLOCK
+	def getModel = RecRef.Models.HIGH_SPEED_PART
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getTexture = RecRef.Textures.HIGH_SPEED_BLOCK
+	def getTexture = RecRef.Textures.HIGH_SPEED_PART
 
 	@Override
 	override def onEntityCollision(entity: Entity) {

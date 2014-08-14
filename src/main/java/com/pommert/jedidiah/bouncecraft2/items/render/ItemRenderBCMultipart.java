@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic;
 import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index;
+import com.pommert.jedidiah.bouncecraft2.util.ByteMap;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -20,10 +21,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ItemRenderBCMultipart implements IItemRenderer {
 
-	private static final IModelCustom[] models = new IModelCustom[Index.VALUES
-			.largestKey() + 1];
-	private static final ResourceLocation[] textures = new ResourceLocation[Index.VALUES
-			.largestKey() + 1];
+	private static final ByteMap<IModelCustom> models = new ByteMap<IModelCustom>();
+	private static final ByteMap<ResourceLocation> textures = new ByteMap<ResourceLocation>();
 
 	public static void createTextures() {
 		Set<Object> keys = Index.VALUES.keySet();
@@ -31,9 +30,9 @@ public class ItemRenderBCMultipart implements IItemRenderer {
 			if (Index.VALUES.containsKey(key)) {
 				BCPartLogic logic = BCPartLogic.newLogic(
 						((Byte) key).byteValue(), null);
-				models[((Byte) key).byteValue()] = AdvancedModelLoader
-						.loadModel(logic.getModel());
-				textures[((Byte) key).byteValue()] = logic.getTexture();
+				models.put(((Byte) key).byteValue(),
+						AdvancedModelLoader.loadModel(logic.getModel()));
+				textures.put(((Byte) key).byteValue(), logic.getTexture());
 			}
 		}
 	}
@@ -90,10 +89,10 @@ public class ItemRenderBCMultipart implements IItemRenderer {
 
 		// Bind texture
 		FMLClientHandler.instance().getClient().renderEngine
-				.bindTexture(textures[damage]);
+				.bindTexture((ResourceLocation) textures.get((byte) damage));
 
 		// Render
-		models[damage].renderAll();
+		((IModelCustom) models.get((byte) damage)).renderAll();
 
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();

@@ -18,11 +18,11 @@ class HighBounceBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartLo
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getModel = RecRef.Models.HIGH_BOUNCE_BLOCK
+	def getModel = RecRef.Models.HIGH_BOUNCE_PART
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getTexture = RecRef.Textures.HIGH_BOUNCE_BLOCK
+	def getTexture = RecRef.Textures.HIGH_BOUNCE_PART
 
 	@Override
 	override def onEntityCollision(entity: Entity) {

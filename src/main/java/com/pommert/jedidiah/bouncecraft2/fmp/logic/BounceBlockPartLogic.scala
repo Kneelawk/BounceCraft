@@ -26,11 +26,11 @@ class BounceBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartLogic(
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getTexture = RecRef.Textures.BOUNCE_BLOCK
+	def getTexture = RecRef.Textures.BOUNCE_PART
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getModel = RecRef.Models.BOUNCE_BLOCK
+	def getModel = RecRef.Models.BOUNCE_PART
 
 	@Override
 	override def onEntityCollision(entity: Entity) {

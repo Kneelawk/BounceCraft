@@ -19,11 +19,11 @@ class LowBounceBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartLog
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getModel = RecRef.Models.LOW_BOUNCE_BLOCK
+	def getModel = RecRef.Models.LOW_BOUNCE_PART
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getTexture = RecRef.Textures.LOW_BOUNCE_BLOCK
+	def getTexture = RecRef.Textures.LOW_BOUNCE_PART
 
 	@Override
 	override def onEntityCollision(entity: Entity) {

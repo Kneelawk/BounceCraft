@@ -94,10 +94,10 @@ class ItemBCMultipart extends BCItem with TItemMultiPart {
 	@SideOnly(Side.CLIENT)
 	override def getSubItems(item: Item, ct: CreativeTabs, list$: JList[_]) {
 		val list = list$.asInstanceOf[JList[ItemStack]]
-		val values = Index.VALUES.keySet().iterator()
+		val keys = Index.VALUES.keySet().iterator()
 		val bcitem = BCItems.items.get("itemBCMultiPart")
-		while (values.hasNext()) {
-			val id = values.next()
+		while (keys.hasNext()) {
+			val id = keys.next()
 			if (id != Index.NULL_BCPARTLOGIC.getId())
 				list.add(new ItemStack(bcitem, 1, id))
 		}

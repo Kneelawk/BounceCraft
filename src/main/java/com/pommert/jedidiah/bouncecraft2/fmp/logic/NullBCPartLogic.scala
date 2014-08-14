@@ -18,9 +18,9 @@ class NullBCPartLogic(part: BCMultiPart, index: Index) extends BCPartLogic(part,
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getTexture = RecRef.Textures.NULL_BLOCK
+	def getTexture = RecRef.Textures.NULL_PART
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getModel = RecRef.Models.NULL_BLOCK
+	def getModel = RecRef.Models.NULL_PART
 }

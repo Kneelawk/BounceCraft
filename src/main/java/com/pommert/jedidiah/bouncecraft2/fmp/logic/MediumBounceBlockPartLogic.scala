@@ -17,11 +17,11 @@ class MediumBounceBlockPartLogic(part: BCMultiPart, index: Index) extends BCPart
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getModel = RecRef.Models.MEDIUM_BOUNCE_BLOCK
+	def getModel = RecRef.Models.MEDIUM_BOUNCE_PART
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getTexture = RecRef.Textures.MEDIUM_BOUNCE_BLOCK
+	def getTexture = RecRef.Textures.MEDIUM_BOUNCE_PART
 
 	@Override
 	override def onEntityCollision(entity: Entity) {

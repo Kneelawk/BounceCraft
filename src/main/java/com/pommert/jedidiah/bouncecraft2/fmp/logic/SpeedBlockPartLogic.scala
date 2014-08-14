@@ -15,11 +15,11 @@ class SpeedBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartLogic(p
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getModel = RecRef.Models.SPEED_BLOCK
+	def getModel = RecRef.Models.SPEED_PART
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getTexture = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockSpeed.png")
+	def getTexture = RecRef.Models.SPEED_PART
 
 	@Override
 	override def onEntityCollision(entity: Entity) {

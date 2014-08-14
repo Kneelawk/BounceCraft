@@ -31,7 +31,7 @@ import net.minecraft.world.World
 import scala.util.control.Breaks._
 
 class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte, c: Boolean) extends TCuboidPart {
-	
+
 	val client = c
 
 	var facing: ForgeDirection = f
@@ -73,12 +73,14 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte, c: Boolean) extend
 		facing = ForgeDirection.VALID_DIRECTIONS(tag.getByte("facing"))
 		rotation = tag.getByte("rotation")
 		val id =
-			if (tag.hasKey("logic_id")) {
-				tag.getInteger("logic_id")
+			if (tag.hasKey("logic_id", 3)) {
+				tag.getInteger("logic_id").byteValue()
+			} else if (tag.hasKey("logic_id", 1)) {
+				tag.getByte("logic_id")
 			} else {
 				Index.NULL_BCPARTLOGIC.getId
 			}
-		logic = BCPartLogic.newLogic(id.byteValue(), this)
+		logic = BCPartLogic.newLogic(id, this)
 		logic.load(tag)
 		setLogicClient()
 	}

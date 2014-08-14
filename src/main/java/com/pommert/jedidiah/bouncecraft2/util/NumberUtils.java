@@ -15,10 +15,14 @@ public class NumberUtils {
 		if (size < 0)
 			throw new IllegalArgumentException(
 					"min can not have a value grater than max");
-		if (value < min || value >= max) {
-			int quot = (value - min) / size;
-			quot -= Math.floor(quot);
-			value = (size * quot) + min;
+		if (value >= max) {
+			int quot = (int) Math.floor((value - min) / size);
+			value = (value - (size * quot)) + min;
+		} else if (value < min) {
+			// FIXME finish negative mod
+			int quot = (int) Math.ceil((((double) value) - ((double) max))
+					/ ((double) size));
+			value = (value - (size * quot)) + max;
 		}
 		return value;
 	}

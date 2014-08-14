@@ -14,11 +14,11 @@ class MediumSpeedBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartL
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getModel = RecRef.Models.MEDIUM_SPEED_BLOCK
+	def getModel = RecRef.Models.MEDIUM_SPEED_PART
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getTexture = RecRef.Textures.MEDIUM_SPEED_BLOCK
+	def getTexture = RecRef.Textures.MEDIUM_SPEED_PART
 
 	@Override
 	override def onEntityCollision(entity: Entity) {

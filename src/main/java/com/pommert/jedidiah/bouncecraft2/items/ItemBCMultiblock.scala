@@ -1,15 +1,21 @@
 package com.pommert.jedidiah.bouncecraft2.items
 
-import codechicken.multipart.TItemMultiPart
-import net.minecraft.item.ItemStack
-import codechicken.multipart.TMultiPart
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.world.World
+import java.util.{ List => JList }
+import com.pommert.jedidiah.bouncecraft2.fmp.BCMultiBlock
+import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCBlockLogic
 import codechicken.lib.vec.BlockCoord
 import codechicken.lib.vec.Vector3
 import codechicken.multipart.MultiPartRegistry
+import codechicken.multipart.TItemMultiPart
+import codechicken.multipart.TMultiPart
 import codechicken.multipart.TileMultipart
-import com.pommert.jedidiah.bouncecraft2.fmp.BCMultiBlock
+import cpw.mods.fml.relauncher.SideOnly
+import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemStack
+import net.minecraft.world.World
+import cpw.mods.fml.relauncher.Side
+import net.minecraft.item.Item
 
 class ItemBCMultiblock extends BCItem with TItemMultiPart {
 
@@ -31,4 +37,18 @@ class ItemBCMultiblock extends BCItem with TItemMultiPart {
 
 	@Override
 	override def getHasSubtypes = true
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	override def getSubItems(item: Item, ct: CreativeTabs, list$: JList[_]) {
+		val list = list$.asInstanceOf[JList[ItemStack]]
+		val keys = BCBlockLogic.Index.VALUES.keySet().iterator()
+		val bcitem = BCItems.items.get("itemBCMultiBlock")
+		while (keys.hasNext()) {
+			val id = keys.next()
+			// TODO remove || true when done testing
+			if ((id != BCBlockLogic.Index.NULL_BCBLOCKLOGIC.getId) || true)
+				list.add(new ItemStack(bcitem, 1, id))
+		}
+	}
 }
