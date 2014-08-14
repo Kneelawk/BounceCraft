@@ -28,7 +28,7 @@ apply plugin: 'forge'
 group= "com.pommert.jedidiah.bouncecraft2" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "BounceCraft2"
 
-ext.configFile = file "gradle.properties"
+ext.configFile = file "build.properties"
 
 configFile.withReader {
     def prop = new Properties()
