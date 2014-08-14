@@ -19,6 +19,6 @@ There are no downloads for BounceCraft2 other than the source right now.
 Setup
 -----
 In order to setup the decomp workspace, all you have to run is <code>./setupDecompWorkspace <i>ide-name</i></code> (linux, MacOSX), or <code>setupDecompWorkspace.bat <i>ide-name</i></code> (Windows).
-Please don't use gradlew directly for setting up the decomp workspace directly, because the script downloads the eclipse folder, which is needed for propper building.
+Please don't use gradlew directly for setting up the decomp workspace, because the script downloads the eclipse folder, which is needed for propper building.
 
 In order to build the mod, all you need to run is <code>./gradlew build</code> (linux, MacOSX), or <code>gradlew.bat build</code> (Windows).
