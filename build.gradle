@@ -28,8 +28,18 @@ apply plugin: 'forge'
 group= "com.pommert.jedidiah.bouncecraft2" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "BounceCraft2"
 
+ext.configFile = file "gradle.properties"
+
+configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+version = config.version
+
 minecraft {
-    version = minecraft.version
+    version = config.minecraft.version
     assetDir = "eclipse/assets"
 }
 
