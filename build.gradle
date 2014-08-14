@@ -29,11 +29,8 @@ group= "com.pommert.jedidiah.bouncecraft2" // http://maven.apache.org/guides/min
 archivesBaseName = "BounceCraft2"
 
 minecraft {
+    version = minecraft.version
     assetDir = "eclipse/assets"
-}
-
-project.ext.properties.each {k, v ->
-    println "$k: $v"
 }
 
 dependencies {
