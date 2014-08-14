@@ -1,3 +1,4 @@
 cd %~dp0
-java -jar DownloadAndExtract.jar
+java -cp DownloadAndExtract.jar com.kneelawk.downloadandextract.Main
 gradlew.bat setupDecompWorkspace %~1
+pause

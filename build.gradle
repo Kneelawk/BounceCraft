@@ -32,6 +32,10 @@ minecraft {
     assetDir = "eclipse/assets"
 }
 
+project.ext.properties.each {k, v ->
+    println "$k: $v"
+}
+
 dependencies {
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
