@@ -123,7 +123,11 @@ class BCMultiPart(f: ForgeDirection, l: BCPartLogic, r: Byte, c: Boolean) extend
 
 	@Override
 	override def activate(player: EntityPlayer, hit: MovingObjectPosition, stack: ItemStack): Boolean = {
-		val stackName = stack.getItem().getUnlocalizedName(stack).toLowerCase()
+		val stackName =
+			if (stack != null)
+				stack.getItem().getUnlocalizedName(stack).toLowerCase()
+			else
+				""
 		val isScrewDriver = (stackName.contains("screw") && stackName.contains("driver")) || stackName.contains("wrench") || stackName.contains("hammer")
 		var worked = false
 		if (isScrewDriver) {

@@ -99,7 +99,7 @@ class ItemBCMultipart extends BCItem with TItemMultiPart {
 		while (keys.hasNext()) {
 			val id = keys.next()
 			if (id != Index.NULL_BCPARTLOGIC.getId())
-				list.add(new ItemStack(bcitem, 1, id))
+				list.add(new ItemStack(bcitem, 1, id.intValue()))
 		}
 	}
 }

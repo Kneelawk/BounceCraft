@@ -96,7 +96,7 @@ public abstract class BCPartLogic {
 		public static Index register(Class<? extends BCPartLogic> clazz,
 				String name) {
 			Index i = new Index(clazz);
-			VALUES.put(i.id, i);
+			VALUES.put(Byte.valueOf(i.id), i);
 			if (indices.containsKey(name))
 				throw new IllegalArgumentException("Part Logic Index name: "
 						+ name + " is already taken!");
@@ -123,7 +123,7 @@ public abstract class BCPartLogic {
 			if (VALUES.containsKey(Byte.valueOf(id)))
 				throw new IllegalArgumentException("Part Logic Index id: " + id
 						+ " is already taken!");
-			VALUES.put(i.id, i);
+			VALUES.put(Byte.valueOf(i.id), i);
 			if (indices.containsKey(name))
 				throw new IllegalArgumentException("Part Logic Index name: "
 						+ name + " is already taken!");

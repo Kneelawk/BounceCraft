@@ -19,10 +19,9 @@ public class NumberUtils {
 			int quot = (int) Math.floor((value - min) / size);
 			value = (value - (size * quot)) + min;
 		} else if (value < min) {
-			// FIXME finish negative mod
 			int quot = (int) Math.ceil((((double) value) - ((double) max))
 					/ ((double) size));
-			value = (value - (size * quot)) + max;
+			value = (value - (size * quot)) + min;
 		}
 		return value;
 	}

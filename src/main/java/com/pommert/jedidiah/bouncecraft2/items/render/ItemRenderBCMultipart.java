@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic;
 import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCPartLogic.Index;
+import com.pommert.jedidiah.bouncecraft2.log.BCLog;
 import com.pommert.jedidiah.bouncecraft2.util.ByteMap;
 
 import cpw.mods.fml.client.FMLClientHandler;
@@ -25,16 +26,16 @@ public class ItemRenderBCMultipart implements IItemRenderer {
 	private static final ByteMap<ResourceLocation> textures = new ByteMap<ResourceLocation>();
 
 	public static void createTextures() {
-		Set<Object> keys = Index.VALUES.keySet();
-		for (Object key : keys) {
+		Set<Byte> keys = Index.VALUES.keySet();
+		for (Byte key : keys) {
 			if (Index.VALUES.containsKey(key)) {
-				BCPartLogic logic = BCPartLogic.newLogic(
-						((Byte) key).byteValue(), null);
-				models.put(((Byte) key).byteValue(),
-						AdvancedModelLoader.loadModel(logic.getModel()));
-				textures.put(((Byte) key).byteValue(), logic.getTexture());
+				BCPartLogic logic = BCPartLogic.newLogic(key.byteValue(), null);
+				models.put(key, AdvancedModelLoader.loadModel(logic.getModel()));
+				textures.put(key, logic.getTexture());
 			}
 		}
+		System.out.println("models: " + models);
+		System.out.println("textures: " + textures);
 	}
 
 	public ItemRenderBCMultipart() {
@@ -89,10 +90,11 @@ public class ItemRenderBCMultipart implements IItemRenderer {
 
 		// Bind texture
 		FMLClientHandler.instance().getClient().renderEngine
-				.bindTexture((ResourceLocation) textures.get((byte) damage));
+				.bindTexture((ResourceLocation) textures.get(Byte
+						.valueOf((byte) damage)));
 
 		// Render
-		((IModelCustom) models.get((byte) damage)).renderAll();
+		((IModelCustom) models.get(Byte.valueOf((byte) damage))).renderAll();
 
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();

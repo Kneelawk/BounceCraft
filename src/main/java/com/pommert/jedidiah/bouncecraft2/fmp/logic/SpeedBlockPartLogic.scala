@@ -19,7 +19,7 @@ class SpeedBlockPartLogic(part: BCMultiPart, index: Index) extends BCPartLogic(p
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	def getTexture = RecRef.Models.SPEED_PART
+	def getTexture = RecRef.Textures.SPEED_PART
 
 	@Override
 	override def onEntityCollision(entity: Entity) {

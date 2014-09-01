@@ -48,7 +48,7 @@ class ItemBCMultiblock extends BCItem with TItemMultiPart {
 			val id = keys.next()
 			// TODO remove || true when done testing
 			if ((id != BCBlockLogic.Index.NULL_BCBLOCKLOGIC.getId) || true)
-				list.add(new ItemStack(bcitem, 1, id))
+				list.add(new ItemStack(bcitem, 1, id.intValue()))
 		}
 	}
 }

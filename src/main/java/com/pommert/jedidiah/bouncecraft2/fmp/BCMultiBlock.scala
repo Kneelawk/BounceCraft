@@ -94,7 +94,11 @@ class BCMultiBlock(l: BCBlockLogic, c: Boolean) extends TCuboidPart {
 
 	@Override
 	override def activate(player: EntityPlayer, hit: MovingObjectPosition, stack: ItemStack): Boolean = {
-		val stackName = stack.getItem().getUnlocalizedName(stack).toLowerCase()
+		val stackName =
+			if (stack != null)
+				stack.getItem().getUnlocalizedName(stack).toLowerCase()
+			else
+				""
 		val isScrewDriver = (stackName.contains("screw") && stackName.contains("driver")) || stackName.contains("wrench") || stackName.contains("hammer")
 		var worked = false
 		if (isScrewDriver) {
@@ -106,6 +110,12 @@ class BCMultiBlock(l: BCBlockLogic, c: Boolean) extends TCuboidPart {
 				case 1 => {
 					rotY = NumberUtils.rotate(rotY, 0, 4, -1).byteValue
 					BCLog.info("rotY: " + rotY)
+				}
+				case 2 => {
+					rotZ = NumberUtils.rotate(rotZ, 0, 4, 1).byteValue
+				}
+				case 3 => {
+					rotZ = NumberUtils.rotate(rotZ, 0, 4, -1).byteValue
 				}
 				case _ => {
 
@@ -119,13 +129,16 @@ class BCMultiBlock(l: BCBlockLogic, c: Boolean) extends TCuboidPart {
 	@Override
 	@SideOnly(Side.CLIENT)
 	override def renderDynamic(pos: Vector3, f: Float, pass: Int) {
-		GL11.glPushMatrix()
-		GL11.glTranslated(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5)
-		GL11.glRotated(rotX * 90, 1, 0, 0)
-		GL11.glRotated(rotY * 90, 0, 1, 0)
-		GL11.glRotated(rotZ * 90, 0, 0, 1)
-		GL11.glTranslated(-0.5, -0.5, -0.5)
-		logic.renderBlock(pos, f)
-		GL11.glPopMatrix()
+		if (pass == 0) {
+			GL11.glPushMatrix()
+			GL11.glTranslated(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5)
+			GL11.glRotated(rotX * 90, 1, 0, 0)
+			GL11.glRotated(rotY * 90, 0, 1, 0)
+			GL11.glRotated(rotZ * 90, 0, 0, 1)
+			GL11.glScaled(1D - 1D / 4096D, 1D - 1D / 4096D, 1D - 1D / 4096D)
+			GL11.glTranslated(-0.5, -0.5, -0.5)
+			logic.renderBlock(pos, f)
+			GL11.glPopMatrix()
+		}
 	}
 }
