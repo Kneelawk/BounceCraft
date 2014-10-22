@@ -24,9 +24,12 @@ class ItemScrewDriver extends BCItem {
 
 	@Override
 	override def onItemUseFirst(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
-		if (player.isSneaking()) {
-			return world.getBlock(x, y, z).onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ)
-		}
+		// FIXME detect shift-clicks on server-side
+		BCLog.debug("Use Screw Driver, player is sneaking: " + player.isSneaking() + ", " + (if (player.worldObj.isRemote) "Client Side" else "Server Side"))
+		// causes client to server desync
+		//if (player.isSneaking()) {
+		//	return world.getBlock(x, y, z).onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ)
+		//}
 		false
 	}
 }

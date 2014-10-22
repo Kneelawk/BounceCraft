@@ -5,7 +5,7 @@ My Attempt to port BounceCraft to Minecraft 1.7.10.
 About BounceCraft2
 ------------------
 BounceCraft and BounceCraft2 were and are mods that are designed to allow the
-minecraft player to, to put it plainly, toss entities around.
+minecraft player to toss entities around.
 
 The main difference between BounceCraft and BounceCraft2 is that BounceCraft2
 has Forge Multipart compatibility, allowing the minecraft player to place more

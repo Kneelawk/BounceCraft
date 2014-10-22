@@ -1,31 +1,44 @@
 package com.pommert.jedidiah.bouncecraft2.fmp
 
-import codechicken.multipart.TCuboidPart
-import codechicken.lib.vec.Cuboid6
-import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCBlockLogic
-import net.minecraft.nbt.NBTTagCompound
-import codechicken.lib.data.MCDataInput
-import codechicken.lib.data.MCDataOutput
-import net.minecraft.item.ItemStack
 import java.util.Arrays
 import java.util.{ List => JList }
-import net.minecraft.util.MovingObjectPosition
-import net.minecraft.entity.Entity
-import com.pommert.jedidiah.bouncecraft2.log.BCLog
-import cpw.mods.fml.relauncher.SideOnly
-import codechicken.lib.vec.Vector3
-import cpw.mods.fml.relauncher.Side
 import org.lwjgl.opengl.GL11
-import net.minecraft.entity.player.EntityPlayer
+import com.pommert.jedidiah.bouncecraft2.fmp.logic.BCBlockLogic
+import com.pommert.jedidiah.bouncecraft2.log.BCLog
 import com.pommert.jedidiah.bouncecraft2.util.NumberUtils
+import codechicken.lib.data.MCDataInput
+import codechicken.lib.data.MCDataOutput
+import codechicken.lib.vec.Cuboid6
+import codechicken.lib.vec.Vector3
+import codechicken.multipart.TCuboidPart
+import cpw.mods.fml.relauncher.SideOnly
+import net.minecraft.entity.Entity
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.MovingObjectPosition
+import net.minecraftforge.common.util.ForgeDirection
+import cpw.mods.fml.relauncher.Side
+
+// Block Rotation
+class BR(d: ForgeDirection, r: Byte) {
+	var dir = d
+	var rot = r
+}
 
 class BCMultiBlock(l: BCBlockLogic, c: Boolean) extends TCuboidPart {
 
 	val client = c
 
-	var rotX: Byte = 0
-	var rotY: Byte = 0
-	var rotZ: Byte = 0
+	// old rotation system
+	// removed because of inefficiencies
+	//	var rotX: Byte = 0
+	//	var rotY: Byte = 0
+	//	var rotZ: Byte = 0
+
+	// new rotation system
+	var dir: ForgeDirection = ForgeDirection.UP
+	var rot: Byte = 0
 
 	var logic: BCBlockLogic = if (l != null) l else BCBlockLogic.newLogic(this, BCBlockLogic.Index.NULL_BCBLOCKLOGIC.getId)
 
@@ -39,9 +52,8 @@ class BCMultiBlock(l: BCBlockLogic, c: Boolean) extends TCuboidPart {
 
 	@Override
 	override def load(tag: NBTTagCompound) {
-		rotX = tag.getByte("rotX")
-		rotY = tag.getByte("rotY")
-		rotZ = tag.getByte("rotz")
+		dir = ForgeDirection.getOrientation(NumberUtils.mod2(tag.getByte("dir"), 0, 6))
+		rot = NumberUtils.mod2(tag.getByte("rot"), 0, 4).byteValue()
 		val id =
 			if (tag.hasKey("logic_id")) {
 				tag.getByte("logic_id")
@@ -54,29 +66,24 @@ class BCMultiBlock(l: BCBlockLogic, c: Boolean) extends TCuboidPart {
 
 	@Override
 	override def save(tag: NBTTagCompound) {
-		tag.setByte("rotX", rotX)
-		tag.setByte("rotY", rotY)
-		tag.setByte("rotZ", rotZ)
+		tag.setByte("dir", dir.ordinal().byteValue())
+		tag.setByte("rot", rot)
 		tag.setByte("logic_id", logic.getId.getId)
 		logic.save(tag)
 	}
 
 	@Override
 	override def readDesc(packet: MCDataInput) {
-		rotX = packet.readByte()
-		rotY = packet.readByte()
-		rotZ = packet.readByte()
+		dir = ForgeDirection.getOrientation(NumberUtils.mod2(packet.readByte(), 0, 6))
+		rot = NumberUtils.mod2(packet.readByte(), 0, 4).byteValue()
 		logic = BCBlockLogic.newLogic(this, packet.readByte())
 		logic.readDesc(packet)
 	}
 
 	@Override
 	override def writeDesc(packet: MCDataOutput) {
-		packet.writeByte(rotX)
-		packet.writeByte(rotY)
-		packet.writeByte(rotZ)
-		BCLog.info("logic: " + logic)
-		BCLog.info("logic.getId: " + logic.getId)
+		packet.writeByte(dir.ordinal().byteValue())
+		packet.writeByte(rot)
 		packet.writeByte(logic.getId.getId)
 		logic.writeDesc(packet)
 	}
@@ -102,23 +109,11 @@ class BCMultiBlock(l: BCBlockLogic, c: Boolean) extends TCuboidPart {
 		val isScrewDriver = (stackName.contains("screw") && stackName.contains("driver")) || stackName.contains("wrench") || stackName.contains("hammer")
 		var worked = false
 		if (isScrewDriver) {
-			hit.sideHit match {
-				case 0 => {
-					rotY = NumberUtils.rotate(rotY, 0, 4, 1).byteValue
-					BCLog.info("rotY: " + rotY)
-				}
-				case 1 => {
-					rotY = NumberUtils.rotate(rotY, 0, 4, -1).byteValue
-					BCLog.info("rotY: " + rotY)
-				}
-				case 2 => {
-					rotZ = NumberUtils.rotate(rotZ, 0, 4, 1).byteValue
-				}
-				case 3 => {
-					rotZ = NumberUtils.rotate(rotZ, 0, 4, -1).byteValue
-				}
-				case _ => {
-
+			val nr = BCMultiBlock.rotationApplications(dir.ordinal())(hit.sideHit)(rot)
+			if (nr != null) {
+				if (logic.canRotate(player, hit, stack, dir, rot, nr.dir, nr.rot)) {
+					dir = nr.dir
+					rot = nr.rot
 				}
 			}
 			worked = true
@@ -132,13 +127,180 @@ class BCMultiBlock(l: BCBlockLogic, c: Boolean) extends TCuboidPart {
 		if (pass == 0) {
 			GL11.glPushMatrix()
 			GL11.glTranslated(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5)
-			GL11.glRotated(rotX * 90, 1, 0, 0)
-			GL11.glRotated(rotY * 90, 0, 1, 0)
-			GL11.glRotated(rotZ * 90, 0, 0, 1)
+			// rotate block
+			BCMultiBlock.renderTransformations(dir.ordinal())(rot)
 			GL11.glScaled(1D - 1D / 4096D, 1D - 1D / 4096D, 1D - 1D / 4096D)
 			GL11.glTranslated(-0.5, -0.5, -0.5)
 			logic.renderBlock(pos, f)
 			GL11.glPopMatrix()
 		}
 	}
+}
+
+object BCMultiBlock {
+	val renderTransformations: Array[(Byte) => Unit] = Array(
+		(rotation: Byte) => {
+			val r = if (rotation.&(1) == 0) {
+				rotation
+			} else {
+				(rotation + 2) % 4
+			}
+			GL11.glRotated(180, 0, 0, 1)
+			GL11.glRotated(90 * r, 0, 1, 0)
+		},
+		(rotation: Byte) => {
+			val r = if (rotation.&(1) == 0) {
+				rotation
+			} else {
+				(rotation + 2) % 4
+			}
+			GL11.glRotated(90 * r, 0, 1, 0)
+		},
+		(rotation: Byte) => {
+			GL11.glRotated(90 * rotation, 0, 0, 1)
+			GL11.glRotated(270, 1, 0, 0)
+		},
+		(rotation: Byte) => {
+			val r = if (rotation.&(1) == 0) {
+				rotation
+			} else {
+				(rotation + 2) % 4
+			}
+			GL11.glRotated(90, 1, 0, 0)
+			GL11.glRotated(90 * r, 0, 1, 0)
+		},
+		(rotation: Byte) => {
+			val r = if (rotation.&(1) == 0) {
+				rotation
+			} else {
+				(rotation + 2) % 4
+			}
+			GL11.glRotated(90, 0, 0, 1)
+			GL11.glRotated(90 * r, 0, 1, 0)
+		},
+		(rotation: Byte) => {
+			val r = if (rotation.&(1) == 0) {
+				rotation
+			} else {
+				(rotation + 2) % 4
+			}
+			GL11.glRotated(270, 0, 0, 1)
+			GL11.glRotated(90 * r, 0, 1, 0)
+		})
+
+	val rotationApplications: Array[Array[(Byte) => BR]] = Array(
+		Array(
+			(rot: Byte) => {
+				new BR(ForgeDirection.DOWN, NumberUtils.rotate(rot, 0, 4, 1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.DOWN, NumberUtils.rotate(rot, 0, 4, -1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.EAST, rot)
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.WEST, rot)
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.NORTH, NumberUtils.rotate(rot, 0, 4, 2).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.SOUTH, NumberUtils.rotate(rot, 0, 4, 2).byteValue())
+			}),
+		Array(
+			(rot: Byte) => {
+				new BR(ForgeDirection.UP, NumberUtils.rotate(rot, 0, 4, -1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.UP, NumberUtils.rotate(rot, 0, 4, 1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.WEST, rot)
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.EAST, rot)
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.SOUTH, rot)
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.NORTH, rot)
+			}),
+		Array(
+			(rot: Byte) => {
+				new BR(ForgeDirection.WEST, NumberUtils.rotate(rot, 0, 4, -1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.EAST, NumberUtils.rotate(rot, 0, 4, 1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.NORTH, NumberUtils.rotate(rot, 0, 4, 1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.NORTH, NumberUtils.rotate(rot, 0, 4, -1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.UP, rot)
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.DOWN, NumberUtils.rotate(rot, 0, 4, 2).byteValue())
+			}),
+		Array(
+			(rot: Byte) => {
+				new BR(ForgeDirection.EAST, NumberUtils.rotate(rot, 0, 4, -1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.WEST, NumberUtils.rotate(rot, 0, 4, 1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.SOUTH, NumberUtils.rotate(rot, 0, 4, -1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.SOUTH, NumberUtils.rotate(rot, 0, 4, 1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.DOWN, NumberUtils.rotate(rot, 0, 4, 2).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.UP, rot)
+			}),
+		Array(
+			(rot: Byte) => {
+				new BR(ForgeDirection.SOUTH, NumberUtils.rotate(rot, 0, 4, -1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.NORTH, NumberUtils.rotate(rot, 0, 4, 1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.DOWN, rot)
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.UP, rot)
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.WEST, NumberUtils.rotate(rot, 0, 4, 1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.WEST, NumberUtils.rotate(rot, 0, 4, -1).byteValue())
+			}),
+		Array(
+			(rot: Byte) => {
+				new BR(ForgeDirection.NORTH, NumberUtils.rotate(rot, 0, 4, -1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.SOUTH, NumberUtils.rotate(rot, 0, 4, 1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.UP, rot)
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.DOWN, rot)
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.EAST, NumberUtils.rotate(rot, 0, 4, -1).byteValue())
+			},
+			(rot: Byte) => {
+				new BR(ForgeDirection.EAST, NumberUtils.rotate(rot, 0, 4, 1).byteValue())
+			}))
 }

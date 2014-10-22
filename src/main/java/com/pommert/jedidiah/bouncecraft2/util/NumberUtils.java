@@ -1,5 +1,9 @@
 package com.pommert.jedidiah.bouncecraft2.util;
 
+import net.minecraftforge.common.util.ForgeDirection;
+import codechicken.lib.vec.Quat;
+import codechicken.lib.vec.Vector3;
+
 public class NumberUtils {
 	public static int rotate(int value, int min, int max, int direction) {
 		value += direction;
@@ -47,5 +51,29 @@ public class NumberUtils {
 			value = (size * quot) + min;
 		}
 		return value;
+	}
+
+	public static Quat createRotation(ForgeDirection direction,
+			double multiplier) {
+		return createRotation(direction.ordinal(), multiplier);
+	}
+
+	public static Quat createRotation(int direction, double multiplier) {
+		switch (direction) {
+		case 0:
+			return new Quat(multiplier, 0, 1, 0);
+		case 1:
+			return new Quat(-multiplier, 0, 1, 0);
+		case 2:
+			return new Quat(multiplier, 0, 0, 1);
+		case 3:
+			return new Quat(-multiplier, 0, 0, 1);
+		case 4:
+			return new Quat(multiplier, 1, 0, 0);
+		case 5:
+			return new Quat(-multiplier, 1, 0, 0);
+		default:
+			return new Quat(0, 0, 0, 0);
+		}
 	}
 }
