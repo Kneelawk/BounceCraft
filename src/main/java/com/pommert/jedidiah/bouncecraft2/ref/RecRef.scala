@@ -5,7 +5,7 @@ import net.minecraft.util.ResourceLocation
 object RecRef {
 	object Models {
 		val NULL_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partMissingTexture.obj")
-		val NULL_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/models/blockGratePush.obj")
+		val NULL_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/models/blockMissingTexture.obj")
 		
 		val BOUNCE_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partBounce.obj")
 		val LOW_BOUNCE_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partLowBounce.obj")
@@ -26,7 +26,7 @@ object RecRef {
 
 	object Textures {
 		val NULL_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partMissingTexture.png")
-		val NULL_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockGratePush.png")
+		val NULL_BLOCK = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockMissingTexture.png")
 		
 		val BOUNCE_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partBounce.png")
 		val LOW_BOUNCE_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partLowBounce.png")

@@ -19,6 +19,7 @@
   "dependencies": [
     "ForgeMultipart",
     "CodeChickenCore"
-  ]
+  ],
+  "useDependencyInformation": true
 }
 ]

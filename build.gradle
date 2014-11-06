@@ -53,10 +53,10 @@ dependencies {
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
 
-    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.93:dev"
-    compile "codechicken:ForgeMultipart:1.7.10-1.1.0.296:dev"
-    compile "codechicken:CodeChickenCore:1.7.10-1.0.1.8:dev"
-    compile "codechicken:NotEnoughItems:1.7.10-1.0.2.15:dev"
+    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.105:dev"
+    compile "codechicken:ForgeMultipart:1.7.10-1.1.0.311:dev"
+    compile "codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev"
+    //compile "codechicken:NotEnoughItems:1.7.10-1.0.3.66:dev"
 
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
