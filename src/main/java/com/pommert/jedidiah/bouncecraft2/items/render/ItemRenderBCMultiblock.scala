@@ -68,7 +68,7 @@ object ItemRenderBCMultiblock {
 		val key = keyIt.next()
 
 		if (BCBlockLogic.Index.VALUES.containsKey(key)) {
-			val logic = BCBlockLogic.newLogic(null, key)
+			val logic = BCBlockLogic.newLogic(key, null)
 			logics.put(key, logic)
 		}
 	}

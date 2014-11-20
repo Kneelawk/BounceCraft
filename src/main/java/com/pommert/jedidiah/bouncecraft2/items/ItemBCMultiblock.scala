@@ -12,10 +12,11 @@ import codechicken.multipart.TileMultipart
 import cpw.mods.fml.relauncher.SideOnly
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import cpw.mods.fml.relauncher.Side
-import net.minecraft.item.Item
+import net.minecraftforge.common.util.ForgeDirection
 
 class ItemBCMultiblock extends BCItem with TItemMultiPart {
 
@@ -30,7 +31,10 @@ class ItemBCMultiblock extends BCItem with TItemMultiPart {
 			}
 		}
 
-		val part = MultiPartRegistry.createPart("bc_multiblock", world.isRemote)
+		val part = MultiPartRegistry.createPart("bc_multiblock", world.isRemote).asInstanceOf[BCMultiBlock]
+
+		part.logic = BCBlockLogic.newLogic(item.getItemDamage().asInstanceOf[Byte], part)
+		part.dir = part.logic.directionWhenPlaced(ForgeDirection.getOrientation(side))
 
 		return part
 	}

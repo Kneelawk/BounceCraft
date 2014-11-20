@@ -16,7 +16,7 @@ import codechicken.lib.data.MCDataInput;
 import codechicken.lib.data.MCDataOutput;
 import codechicken.lib.vec.Cuboid6;
 
-import com.pommert.jedidiah.bouncecraft2.events.InitBounceCraftLogicEvent;
+import com.pommert.jedidiah.bouncecraft2.events.InitBounceCraftPartLogicEvent;
 import com.pommert.jedidiah.bouncecraft2.fmp.BCMultiPart;
 import com.pommert.jedidiah.bouncecraft2.items.BCItems;
 import com.pommert.jedidiah.bouncecraft2.log.BCLog;
@@ -52,7 +52,7 @@ public abstract class BCPartLogic {
 					"HIGH_SPEED_BLOCK_BCPARTLOGIC");
 
 			// register other mod's logics
-			MinecraftForge.EVENT_BUS.post(new InitBounceCraftLogicEvent());
+			MinecraftForge.EVENT_BUS.post(new InitBounceCraftPartLogicEvent());
 
 			// register null logic
 			NULL_BCPARTLOGIC = register(NullBCPartLogic.class,

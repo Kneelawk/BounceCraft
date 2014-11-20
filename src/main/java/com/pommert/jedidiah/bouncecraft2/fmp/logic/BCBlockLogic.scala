@@ -17,9 +17,10 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.MovingObjectPosition
 import cpw.mods.fml.relauncher.Side
-import com.pommert.jedidiah.bouncecraft2.fmp.logic.NullBCBlockLogic
 import java.lang.{ Iterable => JIterable }
 import net.minecraftforge.common.util.ForgeDirection
+import net.minecraftforge.common.MinecraftForge
+import com.pommert.jedidiah.bouncecraft2.events.InitBounceCraftBlockLogicEvent
 
 abstract class BCBlockLogic(block: BCMultiBlock, id: BCBlockLogic.Index) {
 	def getBlock = block
@@ -45,12 +46,14 @@ abstract class BCBlockLogic(block: BCMultiBlock, id: BCBlockLogic.Index) {
 	def onEntityCollision(entity: Entity) {}
 
 	def activate(player: EntityPlayer, hit: MovingObjectPosition, item: ItemStack): Boolean = false
-	
+
 	def canRotate(player: EntityPlayer, hit: MovingObjectPosition, item: ItemStack, oldDirection: ForgeDirection, oldRotation: Byte, newDirection: ForgeDirection, newRotation: Byte): Boolean = true
 
 	def getCollisionBoxes(): JIterable[Cuboid6] = {
 		Arrays.asList(block.getBounds)
 	}
+
+	def directionWhenPlaced(dir: ForgeDirection): ForgeDirection = dir
 }
 
 object BCBlockLogic {
@@ -79,6 +82,13 @@ object BCBlockLogic {
 		var NULL_BCBLOCKLOGIC: Index = null
 
 		def init {
+			// register BounceCraft's logics
+			register(classOf[MoveGrateBlockLogic], "MOVE_GRATE_BCBLOCKLOGIC")
+
+			// register other mods logics
+			MinecraftForge.EVENT_BUS.post(new InitBounceCraftBlockLogicEvent());
+
+			// register null logic
 			NULL_BCBLOCKLOGIC = register(classOf[NullBCBlockLogic], Byte.MaxValue, "NULL_BCBLOCKLOGIC")
 		}
 
@@ -106,7 +116,7 @@ object BCBlockLogic {
 		}
 	}
 
-	def newLogic(block: BCMultiBlock, id: Byte): BCBlockLogic = {
+	def newLogic(id: Byte, block: BCMultiBlock): BCBlockLogic = {
 		if (!Index.VALUES.containsKey(id))
 			return null
 

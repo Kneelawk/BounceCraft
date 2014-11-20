@@ -17,11 +17,11 @@ object RecRef {
 		val MEDIUM_SPEED_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partMediumSpeed.obj")
 		val HIGH_SPEED_PART = new ResourceLocation(ModRef.MOD_ID, "/models/partHighSpeed.obj")
 		
-		val PUSH_GRATE = new ResourceLocation(ModRef.MOD_ID, "/models/blockGratePush.obj")
 		val MOVE_GRATE = new ResourceLocation(ModRef.MOD_ID, "/models/blockGrateMove.obj")
-		val LOW_MOVE_GRATE = new ResourceLocation(ModRef.MOD_ID, "/models/blockGrateLowMove.obj")
-		val MEDIUM_MOVE_GRATE = new ResourceLocation(ModRef.MOD_ID, "/models/blockGrateMediumMove.obj")
-		val HIGH_MOVE_GRATE = new ResourceLocation(ModRef.MOD_ID, "/models/blockGrateHighMove.obj")
+		val PUSH_GRATE = new ResourceLocation(ModRef.MOD_ID, "/models/blockGratePush.obj")
+		val LOW_PUSH_GRATE = new ResourceLocation(ModRef.MOD_ID, "/models/blockGrateLowPush.obj")
+		val MEDIUM_PUSH_GRATE = new ResourceLocation(ModRef.MOD_ID, "/models/blockGrateMediumPush.obj")
+		val HIGH_PUSH_GRATE = new ResourceLocation(ModRef.MOD_ID, "/models/blockGrateHighPush.obj")
 	}
 
 	object Textures {
@@ -38,10 +38,10 @@ object RecRef {
 		val MEDIUM_SPEED_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partMediumSpeed.png")
 		val HIGH_SPEED_PART = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/partHighSpeed.png")
 		
-		val PUSH_GRATE = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockGratePush.png")
 		val MOVE_GRATE = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockGrateMove.png")
-		val LOW_MOVE_GRATE = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockGrateLowMove.png")
-		val MEDIUM_MOVE_GRATE = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockGrateMediumMove.png")
-		val HIGH_MOVE_GRATE = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockGrateHighMove.png")
+		val PUSH_GRATE = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockGratePush.png")
+		val LOW_PUSH_GRATE = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockGrateLowPush.png")
+		val MEDIUM_PUSH_GRATE = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockGrateMediumPush.png")
+		val HIGH_PUSH_GRATE = new ResourceLocation(ModRef.MOD_ID, "/textures/blocks/blockGrateHighPush.png")
 	}
 }

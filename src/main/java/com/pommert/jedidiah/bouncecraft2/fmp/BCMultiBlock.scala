@@ -40,12 +40,15 @@ class BCMultiBlock(l: BCBlockLogic, c: Boolean) extends TCuboidPart {
 	var dir: ForgeDirection = ForgeDirection.UP
 	var rot: Byte = 0
 
-	var logic: BCBlockLogic = if (l != null) l else BCBlockLogic.newLogic(this, BCBlockLogic.Index.NULL_BCBLOCKLOGIC.getId)
+	var logic: BCBlockLogic = if (l != null) l else BCBlockLogic.newLogic(BCBlockLogic.Index.NULL_BCBLOCKLOGIC.getId, this)
 
 	def this(client: Boolean) = this(null, client)
 
 	@Override
 	def getBounds = new Cuboid6(0, 0, 0, 1, 1, 1)
+	
+	@Override
+	override def getCollisionBoxes(): java.lang.Iterable[Cuboid6] = logic.getCollisionBoxes()
 
 	@Override
 	def getType = "bc_multiblock"
@@ -60,7 +63,7 @@ class BCMultiBlock(l: BCBlockLogic, c: Boolean) extends TCuboidPart {
 			} else {
 				BCBlockLogic.Index.NULL_BCBLOCKLOGIC.getId
 			}
-		logic = BCBlockLogic.newLogic(this, id)
+		logic = BCBlockLogic.newLogic(id, this)
 		logic.load(tag)
 	}
 
@@ -76,7 +79,7 @@ class BCMultiBlock(l: BCBlockLogic, c: Boolean) extends TCuboidPart {
 	override def readDesc(packet: MCDataInput) {
 		dir = ForgeDirection.getOrientation(NumberUtils.mod2(packet.readByte(), 0, 6))
 		rot = NumberUtils.mod2(packet.readByte(), 0, 4).byteValue()
-		logic = BCBlockLogic.newLogic(this, packet.readByte())
+		logic = BCBlockLogic.newLogic(packet.readByte(), this)
 		logic.readDesc(packet)
 	}
 
